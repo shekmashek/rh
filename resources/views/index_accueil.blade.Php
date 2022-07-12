@@ -157,7 +157,7 @@
                                         </a>
                                     </div>
                                     <div class="col-4 card_content">
-                                        <a href="https://paie.mg/" target="_blank" rel="noopener noreferrer">
+                                        <a href="http://paie.mg/" target="_blank" rel="noopener noreferrer">
                                             <div class="icon text-center">
                                                 <img class="img-fluid" src="{{ asset('img/logos_all/iconPaie.webp') }}" alt="logo">
                                             </div>
@@ -166,7 +166,7 @@
                                         </a>
                                     </div>
                                     <div class="col-4 card_content">
-                                        <a href="https://temps.mg/" target="_blank" rel="noopener noreferrer">
+                                        <a href="http://temps.mg/" target="_blank" rel="noopener noreferrer">
                                             <div class="icon text-center">
                                                 <img class="img-fluid" src="{{ asset('img/logos_all/iconPersonel.webp') }}" alt="logo">
                                             </div>
@@ -177,7 +177,7 @@
                                 </div>
                                 <div class="row mt-5">
                                     <div class="col-4 card_content">
-                                        <a href="https://conge.mg/" target="_blank" rel="noopener noreferrer">
+                                        <a href="http://conge.mg/" target="_blank" rel="noopener noreferrer">
                                             <div class="icon text-center">
                                                 <img class="img-fluid" src="{{ asset('img/logos_all/iconConge.webp') }}" alt="logo">
                                             </div>
@@ -186,7 +186,7 @@
                                         </a>
                                     </div>
                                     <div class="col-4 card_content">
-                                        <a href="https://personnel.mg/" target="_blank" rel="noopener noreferrer">
+                                        <a href="http://personnel.mg/" target="_blank" rel="noopener noreferrer">
                                             <div class="icon text-center">
                                                 <img class="img-fluid" src="{{ asset('img/logos_all/iconPersonel.webp') }}" alt="logo">
                                             </div>
@@ -195,7 +195,7 @@
                                         </a>
                                     </div>
                                     <div class="col-4 card_content">
-                                        <a href="https://recrutement.mg/" target="_blank" rel="noopener noreferrer">
+                                        <a href="http://recrutement.mg/" target="_blank" rel="noopener noreferrer">
                                             <div class="icon text-center">
                                                 <img class="img-fluid" src="{{ asset('img/logos_all/iconRecrutement.webp') }}" alt="logo">
                                             </div>
