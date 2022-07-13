@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/test', 'HomeController@test')->name('accueil_perso');
@@ -41,8 +42,16 @@ Route::get('condition_generale_de_vente', 'ConditionController@index')->name('co
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
-
-Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+/**Creer nouveau type */
+Route::get('/nouveau', function () {
+    return view('superadmin.type');
+})->name('nouveau');
+
+Route::get('/liste', function () {
+    return view('liste');
+})->name('liste');
+
+/**Enregistrer nouveau type */
+Route::resource('abonnement','TypeAbonnementController');

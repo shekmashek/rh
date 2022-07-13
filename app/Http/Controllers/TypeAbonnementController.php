@@ -17,18 +17,19 @@ class TypeAbonnementController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
-        $this->middleware(function ($request, $next) {
-            if(Auth::user()->exists == false) return redirect()->route('sign-in');
-            return $next($request);
-        });
+        // $this->middleware('auth');
+        // $this->middleware(function ($request, $next) {
+        //     if(Auth::user()->exists == false) return redirect()->route('sign-in');
+        //     return $next($request);
+        // });
         $this->fonct  = new FonctionGenerique();
         $this->abonnement = new Abonnement();
     }
     public function index()
     {
         $service = $this->fonct->findAll("type_services");
-        $liste_type = $this->fonct->findAll("v_type_services_autres_types_abonnements");
+        return view('superadmin.type',compact('service'));
+        // $liste_type = $this->fonct->findAll("v_type_services_autres_types_abonnements");
         // return view('liste_type_abonnement',compact('liste_type','service'));
     }
 
@@ -56,7 +57,7 @@ class TypeAbonnementController extends Controller
         $min_emp = $request->min_emp;
         $max_emp = $request->max_emp;
         $this->abonnement->enregistrer_type_abonnement($nom_type,$prix_fixe,$prix_par_employe,$min_emp,$max_emp);
-        return back()->with("Type d'abonnement enregistré avec succès");
+        return back()->with("success","Type d'abonnement enregistré avec succès");
     }
 
     /**
