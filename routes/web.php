@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
+Route::get('/test', 'HomeController@test')->name('accueil_perso');
 
 Route::get('/', function () {
     return view('index_accueil');
@@ -37,3 +38,11 @@ Route::get('/tarifs', function () {
 });
 
 Route::get('condition_generale_de_vente', 'ConditionController@index')->name('condition_generale_de_vente');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

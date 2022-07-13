@@ -25,7 +25,7 @@
                 <div class="form ">
                     <h2>Bienvenue chez RH.mg <span>👋</span> </h2>
                     <p>Veuillez vous connecter à votre compte et commencer l'aventure</p>
-                    {{-- <form id="form_add_contact" method="POST" action="{{ route('login') }}" class="h-50"> --}}
+                    <form id="form_add_contact" method="POST" action="{{ route('login') }}" class="h-50">
                         @csrf
                         <div class="form-group">
                             <label for="">Email</label>
@@ -63,6 +63,7 @@
 
 </body>
 <script>
+
     function affiche(){
 
         var input = document.getElementById("password");
