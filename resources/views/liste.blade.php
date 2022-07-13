@@ -14,159 +14,299 @@
     <link rel="stylesheet" href="{{asset('assets/css/index_accueil.css')}}">
 
     <style>
-    .card{border: none}
-    .card .image{
-        height: 50%;
-    }
-    .card img{
-        width: 20%;
-    }
-    .image .card-img-top{
+    .container{
         margin: 0 auto;
     }
-    .card select{
-        /* border: none */
+    .card{
+        border:none
     }
-
-    .card .select-selected :after{
-        border: none
+    .card-title, .description_formation {
+        font-size: 80%
     }
     .description{
-        font-size:90%;
+        font-size:80%;
     }
-    .form-check-input :hover{
-        color:none
+    .form-check{
+        font-size:95%;
+    }
+
+    .icon {
+        width: 50px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .icon img{
+        width: 60%;
     }
 
     </style>
 </head>
 <body>
 <div class="container">
-    <h2>Formation.mg</h2>
-    <div class="row">
-        <div class="card  col-md-5 mt-5">
-            <div class="image">
-                <img class="card-img-top" src="{{ asset('img/logos_all/iconFormation.webp') }}" alt="Card image cap">
+    <div class="col-md-9">
+        <h2>Formation.mg</h2>
+        <p class="w-75">Veillez selectionner les abonnements que vous voulez acheter, en selectionnant l'option pour l'abonnement avec les prix et les avantages affichés ci-dessous.</p>
+        <div class="row row-cols-1 row-cols-md-2 g-5">
+            <div class="col">
+            <div class="card shadow my-5">
+                <div class="d-flex flex-row align-items-center">
+                    <div class="icon">
+                        <img class="card-img-top" src="{{ asset('img/logos_all/iconFormation.webp') }}" alt="Card image cap">
+                    </div>
+                    <div class="ms-2">
+                        <h6 class="mb-0">Organisme de Formation</h6>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <p class="description_formation card-text"> Le prix de l'abonnement varie en fonction du nombre d'employé, d'utilisateur et de formateur que vous aller ajouter prochainement pendant l'utilisation du logiciel.</p>
+                    <p>Choisissez votre abonnement:</p>
+                    <div class="form-check mx-2 my-2">
+                        <input class="form-check-input" type="radio" name="of" id="flexRadioDefault0">
+                        <label class="form-check-label" for="flexRadioDefault0">aucun</label>
+                    </div>
+                    <div class="form-check mx-2 my-2">
+                        <input class="form-check-input" type="radio" name="of" id="flexRadioDefault1">
+                        <label class="form-check-label" for="flexRadioDefault1">
+                            <b>TPE - 100.000ar/mois :</b><span class="description"> 1 utilisateur - 1 formateur - 1 à 9 employés</span> </label>
+                    </div>
+                    <div class="form-check mx-2 my-2">
+                        <input class="form-check-input" type="radio" name="of" id="flexRadioDefault2">
+                        <label class="form-check-label" for="flexRadioDefault2">
+                            <b>PME - 200.000ar/mois : </b><span class="description"> 2 utilisateur - 2 formateur - 10 à 49 employés</span></label>
+                    </div>
+                    <div class="form-check mx-2 my-2">
+                        <input class="form-check-input" type="radio" name="of" id="flexRadioDefault3">
+                        <label class="form-check-label" for="flexRadioDefault3">
+                            <b>EI - 300.000ar/mois : </b><span class="description"> 3 utilisateur - 4 formateur - 50 à 249 employés</span></label>
+                    </div>
+                    <div class="form-check mx-2 my-2">
+                        <input class="form-check-input" type="radio" name="of" id="flexRadioDefault4">
+                        <label class="form-check-label" for="flexRadioDefault4">
+                            <b>GE - 400.000ar/mois : </b><span class="description"> illimité - illimité - illimité</span></label>
+                    </div>
+                </div>
             </div>
-            <div class="card-body">
-                <h5 class="card-title">organisme de formation</h5>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="of" id="flexRadioDefault0">
-                    <label class="form-check-label" for="flexRadioDefault0">aucun</label>
+            </div>
+            <div class="col">
+            <div class="card shadow my-5">
+                <div class="d-flex flex-row align-items-center">
+                    <div class="icon">
+                        <img class="card-img-top" src="{{ asset('img/logos_all/iconFormation.webp') }}" alt="Card image cap">
+                    </div>
+                    <div class="ms-2">
+                        <h6 class="mb-0">Entreprise</h6>
+                    </div>
                 </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="of" id="flexRadioDefault1">
-                    <label class="form-check-label" for="flexRadioDefault1">
-                        <b>TPE - 100.000ar/mois :</b><span class="description"> 1 utilisateur - 1 formateur - 1 à 9 employés</span> </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="of" id="flexRadioDefault2">
-                    <label class="form-check-label" for="flexRadioDefault2">
-                        <b>PME - 200.000ar/mois : </b><span class="description"> 2 utilisateur - 2 formateur - 10 à 49 employés</span></label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="of" id="flexRadioDefault3">
-                    <label class="form-check-label" for="flexRadioDefault3">
-                        <b>EI - 300.000ar/mois : </b><span class="description"> 3 utilisateur - 4 formateur - 50 à 249 employés</span></label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="of" id="flexRadioDefault4">
-                    <label class="form-check-label" for="flexRadioDefault4">
-                        <b>GE - 400.000ar/mois : </b><span class="description"> illimité - illimité - illimité</span></label>
+                <div class="card-body">
+                    <p class="description_formation card-text"> Le prix de l'abonnement varie en fonction du nombre d'employé, d'utilisateur et de formateur que vous aller ajouter prochainement pendant l'utilisation du logiciel.</p>
+                    <p>Choisissez votre abonnement:</p>
+                    <div class="form-check mx-2 my-2">
+                        <input class="form-check-input" type="radio" name="entreprise" id="flexRadioDefault01">
+                        <label class="form-check-label" for="flexRadioDefault01">aucun</label>
+                    </div>
+                    <div class="form-check mx-2 my-2">
+                        <input class="form-check-input" type="radio" name="entreprise" id="flexRadioDefault11">
+                        <label class="form-check-label" for="flexRadioDefault11">
+                            <b>TPE - 100.000ar/mois : </b><span class="description"> 1 utilisateur - 1 formateur - 1 à 9 employés</span></label>
+                    </div>
+                    <div class="form-check mx-2 my-2">
+                        <input class="form-check-input" type="radio" name="entreprise" id="flexRadioDefault22">
+                        <label class="form-check-label" for="flexRadioDefault22">
+                            <b>PME - 200.000ar/mois : </b><span class="description"> 2 utilisateur - 2 formateur - 10 à 49 employés</span></label>
+                    </div>
+                    <div class="form-check mx-2 my-2">
+                        <input class="form-check-input" type="radio" name="entreprise" id="flexRadioDefault33">
+                        <label class="form-check-label" for="flexRadioDefault33">
+                            <b>EI - 300.000ar/mois : </b><span class="description"> 3 utilisateur - 4 formateur - 50 à 249 employés</span></label>
+                    </div>
+                    <div class="form-check mx-2 my-2">
+                        <input class="form-check-input" type="radio" name="entreprise" id="flexRadioDefault44">
+                        <label class="form-check-label" for="flexRadioDefault44">
+                            <b>GE - 400.000ar/mois : </b><span class="description"> illimité - illimité - illimité</span></label>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="card  col-md-5 mt-5">
-            <div class="image">
-                <img class="card-img-top" src="{{ asset('img/logos_all/iconFormation.webp') }}" alt="Card image cap">
-            </div>
-            <div class="card-body">
-                <h5 class="card-title">entreprise</h5>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="entreprise" id="flexRadioDefault0">
-                    <label class="form-check-label" for="flexRadioDefault0">aucun</label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="entreprise" id="flexRadioDefault1">
-                    <label class="form-check-label" for="flexRadioDefault1">
-                        <b>TPE - 100.000ar/mois : </b><span class="description"> 1 utilisateur - 1 formateur - 1 à 9 employés</span></label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="entreprise" id="flexRadioDefault2">
-                    <label class="form-check-label" for="flexRadioDefault2">
-                        <b>PME - 200.000ar/mois : </b><span class="description"> 2 utilisateur - 2 formateur - 10 à 49 employés</span></label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="entreprise" id="flexRadioDefault3">
-                    <label class="form-check-label" for="flexRadioDefault3">
-                        <b>EI - 300.000ar/mois : </b><span class="description"> 3 utilisateur - 4 formateur - 50 à 249 employés</span></label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="entreprise" id="flexRadioDefault4">
-                    <label class="form-check-label" for="flexRadioDefault4">
-                        <b>GE - 400.000ar/mois : </b><span class="description"> illimité - illimité - illimité</span></label>
-                </div>
             </div>
         </div>
     </div>
-    <h2>Autres offres</h2>
-    <div class="row">
-        <div class="card  col-md-4 mt-5">
-            <div class="image">
-                <img class="card-img-top" src="{{ asset('img/logos_all/iconPersonel.webp') }}" alt="Card image cap">
+    <div class="col-md-9">
+        <h2>Autres offres</h2>
+        <p>Veillez selectionner les abonnements que vous voulez acheter, en ajoutant le produit au panier.</p>
+        <div class="row row-cols-1 row-cols-md-3 g-5">
+            <div class="col">
+                <div class="card shadow mt-5">
+                    <div class="d-flex flex-row align-items-center">
+                        <div class="icon">
+                            <img class="card-img-top" src="{{ asset('img/logos_all/iconPersonel.webp') }}" alt="Card image cap">
+                        </div>
+                        <div class="ms-2">
+                            <h6 class="mb-0">personnel.mg</h6>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-title">
+                            Le tarif de base est de 100.000ar pour tout abonnement et s'ajoute de suite en fonction du nombre d'employé ajouté :
+                        </p>
+                        <div class="form-check mx-3 my-3">
+                            <input class="form-check-input" type="radio" name="entreprise" id="flexRadioDefault44">
+                            <label class="form-check-label" for="flexRadioDefault44">
+                                <b>3.000ar/employé : </b><span class="description">50 à 249 employés</span></label>
+                        </div>
+                        <div class="form-check mx-3 my-3">
+                            <input class="form-check-input" type="radio" name="entreprise" id="flexRadioDefault44">
+                            <label class="form-check-label" for="flexRadioDefault44">
+                                <b>3.000ar/employé : </b><span class="description">50 à 249 employés</span></label>
+                        </div>
+                        <div class="form-check mx-3 my-3">
+                            <input class="form-check-input" type="radio" name="entreprise" id="flexRadioDefault44">
+                            <label class="form-check-label" for="flexRadioDefault44">
+                                <b>3.000ar/employé : </b><span class="description">50 à 249 employés</span></label>
+                        </div>
+                        <input type="checkbox" class="btn-check" id="personnel" name="personnel">
+                        <label class="btn btn-outline-success w-100" for="personnel">Ajouter au panier</label><br>
+                    </div>
+                </div>
             </div>
-                <div class="card-body">
-                <h5 class="card-title">personnel.mg</h5>
-                <p class="card-text"> 100.000ar + 3000ar/Employé</p>
-                <input type="checkbox" class="btn-check" id="personnel" name="personnel">
-                <label class="btn btn-outline-success" for="personnel">Ajouter au panier</label><br>
+            <div class="col">
+                <div class="card shadow mt-5">
+                    <div class="d-flex flex-row align-items-center">
+                        <div class="icon">
+                            <img class="card-img-top" src="{{ asset('img/logos_all/iconRecrutement.webp') }}" alt="Card image cap">
+                        </div>
+                        <div class="ms-2">
+                            <h6 class="mb-0">recrutement.mg</h6>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-title">
+                            Le tarif de base est de 100.000ar pour tout abonnement et s'ajoute de suite en fonction du nombre d'employé ajouté :
+                        </p>
+                        <div class="form-check mx-3 my-3">
+                            <input class="form-check-input" type="radio" name="entreprise" id="flexRadioDefault44">
+                            <label class="form-check-label" for="flexRadioDefault44">
+                                <b>3.000ar/employé : </b><span class="description">50 à 249 employés</span></label>
+                        </div>
+                        <div class="form-check mx-3 my-3">
+                            <input class="form-check-input" type="radio" name="entreprise" id="flexRadioDefault44">
+                            <label class="form-check-label" for="flexRadioDefault44">
+                                <b>3.000ar/employé : </b><span class="description">50 à 249 employés</span></label>
+                        </div>
+                        <div class="form-check mx-3 my-3">
+                            <input class="form-check-input" type="radio" name="entreprise" id="flexRadioDefault44">
+                            <label class="form-check-label" for="flexRadioDefault44">
+                                <b>3.000ar/employé : </b><span class="description">50 à 249 employés</span></label>
+                        </div>
+                        <input type="checkbox" class="btn-check" id="recrutement" name="recrutement">
+                        <label class="btn btn-outline-success w-100" for="recrutement">Ajouter au panier</label><br>
+                    </div>
+                </div>
             </div>
-        </div>
-            <div class="card  col-md-4 mt-5">
-            <div class="image">
-                <img class="card-img-top" src="{{ asset('img/logos_all/iconRecrutement.webp') }}" alt="Card image cap">
+            <div class="col">
+                <div class="card shadow mt-5">
+                    <div class="d-flex flex-row align-items-center">
+                        <div class="icon">
+                            <img class="card-img-top" src="{{ asset('img/logos_all/iconConge.webp') }}" alt="Card image cap">
+                        </div>
+                        <div class="ms-2">
+                            <h6 class="mb-0">conge.mg</h6>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-title">
+                            Le tarif de base est de 100.000ar pour tout abonnement et s'ajoute de suite en fonction du nombre d'employé ajouté :
+                        </p>
+                        <div class="form-check mx-3 my-3">
+                            <input class="form-check-input" type="radio" name="entreprise" id="flexRadioDefault44">
+                            <label class="form-check-label" for="flexRadioDefault44">
+                                <b>3.000ar/employé : </b><span class="description">50 à 249 employés</span></label>
+                        </div>
+                        <div class="form-check mx-3 my-3">
+                            <input class="form-check-input" type="radio" name="entreprise" id="flexRadioDefault44">
+                            <label class="form-check-label" for="flexRadioDefault44">
+                                <b>3.000ar/employé : </b><span class="description">50 à 249 employés</span></label>
+                        </div>
+                        <div class="form-check mx-3 my-3">
+                            <input class="form-check-input" type="radio" name="entreprise" id="flexRadioDefault44">
+                            <label class="form-check-label" for="flexRadioDefault44">
+                                <b>3.000ar/employé : </b><span class="description">50 à 249 employés</span></label>
+                        </div>
+                        <input type="checkbox" class="btn-check" id="conge" name="conge">
+                        <label class="btn btn-outline-success w-100" for="conge">Ajouter au panier</label><br>
+                    </div>
+                </div>
             </div>
-                <div class="card-body">
-                <h5 class="card-title">recrutement.mg</h5>
-                <p class="card-text"> 200.000ar + 3000ar/Employé</p>
-                <input type="checkbox" class="btn-check" id="recrutement" name="recrutement">
-                <label class="btn btn-outline-success" for="recrutement">Ajouter au panier</label><br>
+            <div class="col">
+                <div class="card shadow mt-5">
+                    <div class="d-flex flex-row align-items-center">
+                        <div class="icon">
+                            <img class="card-img-top" src="{{ asset('img/logos_all/iconPaie.webp') }}" alt="Card image cap">
+                        </div>
+                        <div class="ms-2">
+                            <h6 class="mb-0">paie.mg</h6>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-title">
+                            Le tarif de base est de 100.000ar pour tout abonnement et s'ajoute de suite en fonction du nombre d'employé ajouté :
+                        </p>
+                        <div class="form-check mx-3 my-3">
+                            <input class="form-check-input" type="radio" name="entreprise" id="flexRadioDefault44">
+                            <label class="form-check-label" for="flexRadioDefault44">
+                                <b>3.000ar/employé : </b><span class="description">50 à 249 employés</span></label>
+                        </div>
+                        <div class="form-check mx-3 my-3">
+                            <input class="form-check-input" type="radio" name="entreprise" id="flexRadioDefault44">
+                            <label class="form-check-label" for="flexRadioDefault44">
+                                <b>3.000ar/employé : </b><span class="description">50 à 249 employés</span></label>
+                        </div>
+                        <div class="form-check mx-3 my-3">
+                            <input class="form-check-input" type="radio" name="entreprise" id="flexRadioDefault44">
+                            <label class="form-check-label" for="flexRadioDefault44">
+                                <b>3.000ar/employé : </b><span class="description">50 à 249 employés</span></label>
+                        </div>
+                        <input type="checkbox" class="btn-check" id="paie" name="paie">
+                        <label class="btn btn-outline-success w-100" for="paie">Ajouter au panier</label><br>
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="card  col-md-4 mt-5">
-            <div class="image">
-                <img class="card-img-top" src="{{ asset('img/logos_all/iconConge.webp') }}" alt="Card image cap">
+            <div class="col">
+                <div class="card shadow mt-5">
+                    <div class="d-flex flex-row align-items-center">
+                        <div class="icon">
+                            <img class="card-img-top" src="{{ asset('img/logos_all/iconPersonel.webp') }}" alt="Card image cap">
+                        </div>
+                        <div class="ms-2">
+                            <h6 class="mb-0">temps.mg</h6>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-title">
+                            Le tarif de base est de 100.000ar pour tout abonnement et s'ajoute de suite en fonction du nombre d'employé ajouté :
+                        </p>
+                        <div class="form-check mx-3 my-3">
+                            <input class="form-check-input" type="radio" name="entreprise" id="flexRadioDefault44">
+                            <label class="form-check-label" for="flexRadioDefault44">
+                                <b>3.000ar/employé : </b><span class="description">50 à 249 employés</span></label>
+                        </div>
+                        <div class="form-check mx-3 my-3">
+                            <input class="form-check-input" type="radio" name="entreprise" id="flexRadioDefault44">
+                            <label class="form-check-label" for="flexRadioDefault44">
+                                <b>3.000ar/employé : </b><span class="description">50 à 249 employés</span></label>
+                        </div>
+                        <div class="form-check mx-3 my-3">
+                            <input class="form-check-input" type="radio" name="entreprise" id="flexRadioDefault44">
+                            <label class="form-check-label" for="flexRadioDefault44">
+                                <b>3.000ar/employé : </b><span class="description">50 à 249 employés</span></label>
+                        </div>
+                        <input type="checkbox" class="btn-check" id="temps" name="temps">
+                        <label class="btn btn-outline-success w-100" for="temps">Ajouter au panier</label><br>
+                    </div>
+                </div>
             </div>
-                <div class="card-body">
-                <h5 class="card-title">conge.mg</h5>
-                <p class="card-text"> 200.000ar + 3000ar/Employé</p>
-                <input type="checkbox" class="btn-check" id="conge" name="conge">
-                <label class="btn btn-outline-success" for="conge">Ajouter au panier</label><br>
-            </div>
-        </div>
-        <div class="card  col-md-4 mt-5">
-            <div class="image">
-                <img class="card-img-top" src="{{ asset('img/logos_all/iconPaie.webp') }}" alt="Card image cap">
-            </div>
-                <div class="card-body">
-                <h5 class="card-title">paie.mg</h5>
-                <p class="card-text"> 100.000ar + 3000ar/Employé</p>
-                <input type="checkbox" class="btn-check" id="paie" name="paie">
-                <label class="btn btn-outline-success" for="paie">Ajouter au panier</label><br>
-            </div>
-        </div>
-        <div class="card  col-md-4 mt-5">
-            <div class="image">
-                <img class="card-img-top" src="{{ asset('img/logos_all/iconPersonel.webp') }}" alt="Card image cap">
-            </div>
-                <div class="card-body">
-                <h5 class="card-title">temps.mg</h5>
-                <p class="card-text"> 50.000ar + 3000ar/Employé</p>
-                <input type="checkbox" class="btn-check" id="temps" name="temps">
-                <label class="btn btn-outline-success" for="temps">Ajouter au panier</label><br>
-            </div>
-        </div>
 
+        </div>
     </div>
 
     {{-- <form method="POST" action="{{route('izay tinao')}}" enctype="multipart/form-data"> --}}
