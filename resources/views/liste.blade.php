@@ -134,41 +134,42 @@
         <h2>Autres offres</h2>
         <p>Veillez selectionner les abonnements que vous voulez acheter, en ajoutant le produit au panier.</p>
         <div class="row row-cols-1 row-cols-md-3 g-5">
+            @foreach ($type_service as $serv )
             <div class="col">
                 <div class="card shadow mt-5">
                     <div class="d-flex flex-row align-items-center">
                         <div class="icon">
                             <img class="card-img-top" src="{{ asset('img/logos_all/iconPersonel.webp') }}" alt="Card image cap">
                         </div>
-                        <div class="ms-2">
-                            <h6 class="mb-0">personnel.mg</h6>
-                        </div>
+
+                            <div class="ms-2">
+                                <h6 class="mb-0">{{$serv->type_service}}.mg</h6>
+                            </div>
+
+
                     </div>
                     <div class="card-body">
                         <p class="card-title">
-                            Le tarif de base est de 100.000ar pour tout abonnement et s'ajoute de suite en fonction du nombre d'employé ajouté :
+                            Le tarif de base est de  {{number_format($serv->prix_fixe,0,',','.')}} ar pour tout abonnement et s'ajoute de suite en fonction du nombre d'employé ajouté :
                         </p>
-                        <div class="form-check mx-3 my-3">
-                            <input class="form-check-input" type="radio" name="entreprise" id="flexRadioDefault44">
-                            <label class="form-check-label" for="flexRadioDefault44">
-                                <b>3.000ar/employé : </b><span class="description">50 à 249 employés</span></label>
-                        </div>
-                        <div class="form-check mx-3 my-3">
-                            <input class="form-check-input" type="radio" name="entreprise" id="flexRadioDefault44">
-                            <label class="form-check-label" for="flexRadioDefault44">
-                                <b>3.000ar/employé : </b><span class="description">50 à 249 employés</span></label>
-                        </div>
-                        <div class="form-check mx-3 my-3">
-                            <input class="form-check-input" type="radio" name="entreprise" id="flexRadioDefault44">
-                            <label class="form-check-label" for="flexRadioDefault44">
-                                <b>3.000ar/employé : </b><span class="description">50 à 249 employés</span></label>
-                        </div>
+                        @foreach ($limite_type as $limite )
+                            @if($limite->autres_types_abonnements_id == $serv->id)
+                                <div class="form-check mx-3 my-3">
+                                    <input class="form-check-input" type="radio" name="entreprise" id="flexRadioDefault44">
+                                    <label class="form-check-label" for="flexRadioDefault44">
+                                        <b>{{number_format($limite->prix_par_employe,0,',','.')}} ar/employé : </b><span class="description">{{$limite->min_emp}} à {{$limite->max_emp}} employés</span></label>
+                                </div>
+                            @endif
+                        @endforeach
+
+
                         <input type="checkbox" class="btn-check" id="personnel" name="personnel">
                         <label class="btn btn-outline-success w-100" for="personnel">Ajouter au panier</label><br>
                     </div>
                 </div>
             </div>
-            <div class="col">
+            @endforeach
+            {{-- <div class="col">
                 <div class="card shadow mt-5">
                     <div class="d-flex flex-row align-items-center">
                         <div class="icon">
@@ -303,7 +304,7 @@
                         <label class="btn btn-outline-success w-100" for="temps">Ajouter au panier</label><br>
                     </div>
                 </div>
-            </div>
+            </div> --}}
 
         </div>
     </div>

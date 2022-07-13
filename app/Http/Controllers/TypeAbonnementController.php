@@ -27,10 +27,10 @@ class TypeAbonnementController extends Controller
     }
     public function index()
     {
-        $service = $this->fonct->findAll("type_services");
-        return view('superadmin.type',compact('service'));
-        // $liste_type = $this->fonct->findAll("v_type_services_autres_types_abonnements");
-        // return view('liste_type_abonnement',compact('liste_type','service'));
+
+        $type_service = $this->fonct->findAll("v_type_services_autres_types_abonnements");
+        $limite_type = $this->fonct->findAll("limite_autres_abonnements");
+        return view('liste',compact('type_service','limite_type'));
     }
 
     /**
@@ -40,7 +40,8 @@ class TypeAbonnementController extends Controller
      */
     public function create()
     {
-        //
+        $service = $this->fonct->findAll("type_services");
+        return view('superadmin.type',compact('service'));
     }
 
     /**
