@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\FonctionGenerique;
+use App\Models\Abonnement;
 use Illuminate\Support\Facades\Auth;
 
 class TypeAbonnementController extends Controller
@@ -22,10 +23,13 @@ class TypeAbonnementController extends Controller
             return $next($request);
         });
         $this->fonct  = new FonctionGenerique();
+        $this->abonnement = new Abonnement();
     }
     public function index()
     {
-        //
+        $service = $this->fonct->findAll("type_services");
+        $liste_type = $this->fonct->findAll("v_type_services_autres_types_abonnements");
+        // return view('liste_type_abonnement',compact('liste_type','service'));
     }
 
     /**
@@ -51,7 +55,7 @@ class TypeAbonnementController extends Controller
         $prix_par_employe = $request->prix_par_employe;
         $min_emp = $request->min_emp;
         $max_emp = $request->max_emp;
-        DB::insert('insert into autres_types_abonnements (nom_type,prix_fixe,prix_par_employe,min_emp,max_emp) values (?,?,?,?,?)', [$nom_type,$prix_fixe,$prix_par_employe,$min_emp,$max_emp]);
+        $this->abonnement->enregistrer_type_abonnement($nom_type,$prix_fixe,$prix_par_employe,$min_emp,$max_emp);
         return back()->with("Type d'abonnement enregistré avec succès");
     }
 
@@ -92,7 +96,7 @@ class TypeAbonnementController extends Controller
         $prix_par_employe = $request->prix_par_employe;
         $min_emp = $request->min_emp;
         $max_emp = $request->max_emp;
-        DB::update('update autres_types_abonnements set nom_type = ?,prix_fixe = ?, prix_par_employe = ?, min_emp = ? where id = ?', [$nom_type,$prix_fixe,$prix_par_employe,$min_emp,$max_emp,$id]);
+        $this->abonnement->modifier_type_abonnement($nom_type,$prix_fixe,$prix_par_employe,$min_emp,$max_emp,$id);
         return back();
     }
 
@@ -106,6 +110,13 @@ class TypeAbonnementController extends Controller
     {
         //on doit d'abord verifier s'il y a déjà des entreprises abonnés à ce type
         $verification = $this->fonct->findWhere("entreprise_autres_abonnements",["autres_types_abonnements_id"],[$id]);
-
+        if(count($verification) > 0) {
+            return back()->with("Vous ne pouvez pas supprimer ce type d'abonnement");
+        }
+        else {
+            $this->abonnement->supprimer_type_abonnement($id);
+            return back();
+        }
     }
 }
+
