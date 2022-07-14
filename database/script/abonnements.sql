@@ -11,10 +11,15 @@ INSERT INTO type_services(`type_service`) VALUES ("personnel"),("paie"),("congé
 CREATE TABLE `autres_types_abonnements` (
   `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `type_service_id` bigint(20) UNSIGNED NOT NULL  REFERENCES type_services(id) ON DELETE CASCADE,
-  `prix_fixe`  decimal(15,2),
+  `prix_fixe`  decimal(15,2)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE `limite_autres_abonnements` (
+  `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `prix_par_employe`  decimal(15,2),
   `min_emp` int(5) NOT NULL,
   `max_emp` int(5) NOT NULL,
+  `autres_types_abonnements_id` bigint(20) UNSIGNED NOT NULL  REFERENCES autres_types_abonnements(id) ON DELETE CASCADE,
   `created_at` timestamp NULL DEFAULT  current_timestamp(),
   `updated_at` timestamp NULL DEFAULT  current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -50,11 +55,9 @@ CREATE TABLE `factures_autres_abonnements` (
 CREATE OR REPLACE VIEW v_type_services_autres_types_abonnements as SELECT
      t.id,
      t.prix_fixe,
-     t.prix_par_employe,
-     t.min_emp,
-     t.max_emp,
      s.id as service_id,
      s.type_service
 FROM autres_types_abonnements as t
-JOIN type_services as s ON s.id = t.type_service_id;
+JOIN type_services as s ON s.id = t.type_service_id
+;
 

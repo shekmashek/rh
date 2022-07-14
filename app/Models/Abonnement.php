@@ -6,11 +6,25 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use App\Models\FonctionGenerique;
+use Exception;
+
 class Abonnement extends Model
 {
     /**Crud type d'abonnement */
     public function enregistrer_type_abonnement($nom_type,$prix_fixe,$prix_par_employe,$min_emp,$max_emp){
-        DB::insert('insert into autres_types_abonnements (type_service_id,prix_fixe,prix_par_employe,min_emp,max_emp) values (?,?,?,?,?)', [$nom_type,$prix_fixe,$prix_par_employe,$min_emp,$max_emp]);
+
+        $fonct = new FonctionGenerique();
+        try {
+            DB::beginTransaction();
+            $test = $fonct->findWhere("autres_types_abonnements",["type_service_id"],[$nom_type]);
+            if(count($test)< 1)  DB::insert('insert into autres_types_abonnements (type_service_id,prix_fixe) values (?,?)', [$nom_type,$prix_fixe]);
+            $autres_types_abonnements_id = DB::table('autres_types_abonnements')->latest('id')->first()->id;
+            DB::insert('insert into limite_autres_abonnements (prix_par_employe,min_emp,max_emp,autres_types_abonnements_id) values (?,?,?,?)', [$prix_par_employe,$min_emp,$max_emp,$autres_types_abonnements_id]);
+            DB::commit();
+        } catch (Exception $e) {
+           DB::rollBack();
+           return back()->with('erreur',"Echec de l'insertion");
+        }
     }
     public function modifier_type_abonnement($nom_type,$prix_fixe,$prix_par_employe,$min_emp,$max_emp,$id){
         DB::update('update autres_types_abonnements set type_service_id = ?,prix_fixe = ?, prix_par_employe = ?, min_emp = ? where id = ?', [$nom_type,$prix_fixe,$prix_par_employe,$min_emp,$max_emp,$id]);

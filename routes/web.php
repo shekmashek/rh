@@ -46,11 +46,10 @@ Route::get('/nouveau', function () {
     return view('superadmin.type');
 })->name('nouveau');
 
-Route::get('/liste', function () {
-    return view('liste');
-})->name('liste');
+
 
 /**Enregistrer nouveau type */
 Route::resource('abonnement','TypeAbonnementController');
 
 Route::get('listeAbonne','AbonnementController@listeAbonne')->name('listeAbonne');
+Route::get('verification','TypeAbonnementController@verification')->name('verification');

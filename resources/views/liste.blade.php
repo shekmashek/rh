@@ -61,30 +61,18 @@
                 <div class="card-body">
                     <p class="description_formation card-text"> Le prix de l'abonnement varie en fonction du nombre d'employé, d'utilisateur et de formateur que vous aller ajouter prochainement pendant l'utilisation du logiciel.</p>
                     <p>Choisissez votre abonnement:</p>
-                    <div class="form-check mx-2 my-2">
-                        <input class="form-check-input" type="radio" name="of" id="flexRadioDefault0">
-                        <label class="form-check-label" for="flexRadioDefault0">aucun</label>
-                    </div>
-                    <div class="form-check mx-2 my-2">
-                        <input class="form-check-input" type="radio" name="of" id="flexRadioDefault1">
-                        <label class="form-check-label" for="flexRadioDefault1">
-                            <b>TPE - 100.000ar/mois :</b><span class="description"> 1 utilisateur - 1 formateur - 1 à 9 employés</span> </label>
-                    </div>
-                    <div class="form-check mx-2 my-2">
-                        <input class="form-check-input" type="radio" name="of" id="flexRadioDefault2">
-                        <label class="form-check-label" for="flexRadioDefault2">
-                            <b>PME - 200.000ar/mois : </b><span class="description"> 2 utilisateur - 2 formateur - 10 à 49 employés</span></label>
-                    </div>
-                    <div class="form-check mx-2 my-2">
-                        <input class="form-check-input" type="radio" name="of" id="flexRadioDefault3">
-                        <label class="form-check-label" for="flexRadioDefault3">
-                            <b>EI - 300.000ar/mois : </b><span class="description"> 3 utilisateur - 4 formateur - 50 à 249 employés</span></label>
-                    </div>
-                    <div class="form-check mx-2 my-2">
-                        <input class="form-check-input" type="radio" name="of" id="flexRadioDefault4">
-                        <label class="form-check-label" for="flexRadioDefault4">
-                            <b>GE - 400.000ar/mois : </b><span class="description"> illimité - illimité - illimité</span></label>
-                    </div>
+                    @foreach ($abonnement_cfp as $ab_cfp)
+                        <div class="form-check mx-2 my-2">
+                            <input class="form-check-input" type="radio" name="of" id="flexRadioDefault1">
+                            <label class="form-check-label" for="flexRadioDefault1">
+                                @if($ab_cfp->illimite == 0)
+                                    <b>{{$ab_cfp->nom_type}} -  {{number_format($ab_cfp->tarif,0,',','.')}} ar/mois :</b><span class="description"> {{$ab_cfp->nb_utilisateur}} utilisateurs - {{$ab_cfp->nb_formateur}} formateurs - {{$ab_cfp->nb_projet}} projets</span> </label>
+                                @endif
+                                @if($ab_cfp->illimite == 1)
+                                    <b>{{$ab_cfp->nom_type}} - {{number_format($ab_cfp->tarif,0,',','.')}}ar/mois : </b><span class="description"> utilisateurs illimités -  formateurs illimités -  projets illimités</span></label>
+                                @endif
+                        </div>
+                    @endforeach
                 </div>
             </div>
             </div>
@@ -101,30 +89,18 @@
                 <div class="card-body">
                     <p class="description_formation card-text"> Le prix de l'abonnement varie en fonction du nombre d'employé, d'utilisateur et de formateur que vous aller ajouter prochainement pendant l'utilisation du logiciel.</p>
                     <p>Choisissez votre abonnement:</p>
-                    <div class="form-check mx-2 my-2">
-                        <input class="form-check-input" type="radio" name="entreprise" id="flexRadioDefault01">
-                        <label class="form-check-label" for="flexRadioDefault01">aucun</label>
-                    </div>
-                    <div class="form-check mx-2 my-2">
-                        <input class="form-check-input" type="radio" name="entreprise" id="flexRadioDefault11">
-                        <label class="form-check-label" for="flexRadioDefault11">
-                            <b>TPE - 100.000ar/mois : </b><span class="description"> 1 utilisateur - 1 formateur - 1 à 9 employés</span></label>
-                    </div>
-                    <div class="form-check mx-2 my-2">
-                        <input class="form-check-input" type="radio" name="entreprise" id="flexRadioDefault22">
-                        <label class="form-check-label" for="flexRadioDefault22">
-                            <b>PME - 200.000ar/mois : </b><span class="description"> 2 utilisateur - 2 formateur - 10 à 49 employés</span></label>
-                    </div>
-                    <div class="form-check mx-2 my-2">
-                        <input class="form-check-input" type="radio" name="entreprise" id="flexRadioDefault33">
-                        <label class="form-check-label" for="flexRadioDefault33">
-                            <b>EI - 300.000ar/mois : </b><span class="description"> 3 utilisateur - 4 formateur - 50 à 249 employés</span></label>
-                    </div>
-                    <div class="form-check mx-2 my-2">
-                        <input class="form-check-input" type="radio" name="entreprise" id="flexRadioDefault44">
-                        <label class="form-check-label" for="flexRadioDefault44">
-                            <b>GE - 400.000ar/mois : </b><span class="description"> illimité - illimité - illimité</span></label>
-                    </div>
+                    @foreach ($abonnement_etp as $ab_etp)
+                        <div class="form-check mx-2 my-2">
+                            <input class="form-check-input" type="radio" name="entreprise" id="flexRadioDefault11">
+                            <label class="form-check-label" for="flexRadioDefault11">
+                                @if($ab_etp->illimite == 0)
+                                    <b>{{$ab_etp->nom_type}} - {{number_format($ab_etp->tarif,0,',','.')}}ar/mois : </b><span class="description">{{$ab_etp->nb_utilisateur}}  utilisateurs - {{$ab_etp->nb_formateur}} formateurs - {{$ab_etp->min_emp}} à {{$ab_etp->max_emp}} employés</span></label>
+                                @endif
+                                @if($ab_etp->illimite == 1)
+                                     <b>{{$ab_etp->nom_type}} - {{number_format($ab_etp->tarif,0,',','.')}}ar/mois : </b><span class="description"> utilisateurs illimités -  formateurs illimités -  employés illimités</span></label>
+                                @endif
+                        </div>
+                    @endforeach
                 </div>
             </div>
             </div>
@@ -134,41 +110,56 @@
         <h2>Autres offres</h2>
         <p>Veillez selectionner les abonnements que vous voulez acheter, en ajoutant le produit au panier.</p>
         <div class="row row-cols-1 row-cols-md-3 g-5">
+            @foreach ($type_service as $serv )
             <div class="col">
                 <div class="card shadow mt-5">
                     <div class="d-flex flex-row align-items-center">
                         <div class="icon">
-                            <img class="card-img-top" src="{{ asset('img/logos_all/iconPersonel.webp') }}" alt="Card image cap">
+                            @if($serv->service_id == 1)
+                                <img class="card-img-top" src="{{ asset('img/logos_all/iconPersonel.webp') }}" alt="Card image cap">
+                            @endif
+                            @if($serv->service_id == 2)
+                                <img class="card-img-top" src="{{ asset('img/logos_all/iconPaie.webp') }}" alt="Card image cap">
+                            @endif
+                            @if($serv->service_id == 3)
+                                <img class="card-img-top" src="{{ asset('img/logos_all/iconConge.webp') }}" alt="Card image cap">
+                            @endif
+                            @if($serv->service_id == 4)
+                                <img class="card-img-top" src="{{ asset('img/logos_all/iconRecrutement.webp') }}" alt="Card image cap">
+                            @endif
+                            @if($serv->service_id == 5)
+                            <img class="card-img-top" src="{{ asset('img/logos_all/iconPaie.webp') }}" alt="Card image cap">
+                            @endif
                         </div>
-                        <div class="ms-2">
-                            <h6 class="mb-0">personnel.mg</h6>
-                        </div>
+
+                            <div class="ms-2">
+                                <h6 class="mb-0">{{$serv->type_service}}.mg</h6>
+                            </div>
+
+
                     </div>
                     <div class="card-body">
                         <p class="card-title">
-                            Le tarif de base est de 100.000ar pour tout abonnement et s'ajoute de suite en fonction du nombre d'employé ajouté :
+                            Le tarif de base est de  {{number_format($serv->prix_fixe,0,',','.')}} ar pour tout abonnement et s'ajoute de suite en fonction du nombre d'employé ajouté :
                         </p>
-                        <div class="form-check mx-3 my-3">
-                            <input class="form-check-input" type="radio" name="entreprise" id="flexRadioDefault44">
-                            <label class="form-check-label" for="flexRadioDefault44">
-                                <b>3.000ar/employé : </b><span class="description">50 à 249 employés</span></label>
-                        </div>
-                        <div class="form-check mx-3 my-3">
-                            <input class="form-check-input" type="radio" name="entreprise" id="flexRadioDefault44">
-                            <label class="form-check-label" for="flexRadioDefault44">
-                                <b>3.000ar/employé : </b><span class="description">50 à 249 employés</span></label>
-                        </div>
-                        <div class="form-check mx-3 my-3">
-                            <input class="form-check-input" type="radio" name="entreprise" id="flexRadioDefault44">
-                            <label class="form-check-label" for="flexRadioDefault44">
-                                <b>3.000ar/employé : </b><span class="description">50 à 249 employés</span></label>
-                        </div>
+                        @foreach ($limite_type as $limite )
+                            @if($limite->autres_types_abonnements_id == $serv->id)
+                                <div class="form-check mx-3 my-3">
+                                    <input class="form-check-input" type="radio" name="entreprise" id="flexRadioDefault44">
+                                    <label class="form-check-label" for="flexRadioDefault44">
+                                        <b>{{number_format($limite->prix_par_employe,0,',','.')}} ar/employé : </b><span class="description">{{$limite->min_emp}} à {{$limite->max_emp}} employés</span></label>
+                                </div>
+                            @endif
+                        @endforeach
+
+
                         <input type="checkbox" class="btn-check" id="personnel" name="personnel">
                         <label class="btn btn-outline-success w-100" for="personnel">Ajouter au panier</label><br>
                     </div>
                 </div>
             </div>
-            <div class="col">
+            @endforeach
+            {{-- <div class="col">
                 <div class="card shadow mt-5">
                     <div class="d-flex flex-row align-items-center">
                         <div class="icon">
@@ -303,7 +294,7 @@
                         <label class="btn btn-outline-success w-100" for="temps">Ajouter au panier</label><br>
                     </div>
                 </div>
-            </div>
+            </div> --}}
 
         </div>
     </div>
