@@ -53,3 +53,4 @@ Route::get('/nouveau', function () {
 
 /**Enregistrer nouveau type */
 Route::resource('abonnement','TypeAbonnementController');
+Route::get('verification','TypeAbonnementController@verification')->name('verification');

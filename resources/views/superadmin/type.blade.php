@@ -25,7 +25,7 @@
                             @endif
                             @csrf
                             <div class="form-group">
-                                <select name="nom_type" class="form-select input_select">
+                                <select name="nom_type" class="form-select input_select" id="type">
                                     <option value="null">Choisissez le type de service...</option>
                                     @foreach ($service as $serv )
                                         <option value = {{$serv->id}}>{{$serv->type_service}}</option>
@@ -39,7 +39,7 @@
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control input" name="prix_fixe"  required>
+                                <input type="text" class="form-control input" name="prix_fixe" id="prix_fixe"  required>
                                 <label for="input" class="form-control-placeholder">Prix Fixe</label>
                                 @error('prix_fixe')
                                 <div class="col-sm-6">
@@ -86,4 +86,32 @@
         </div>
     </form>
 </body>
+<script src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<meta name="csrf-token" content="{{ csrf_token() }}" />
+<script>
+    //  $("#type" ).on( "change", function() {
+    //     var id_service = $(this).val();
+    //     $.ajax({
+    //         type: "GET",
+    //         url: "{{route('verification')}}",
+    //         data:{Id:id_service},
+    //         dataType: "html",
+    //         success:function(response){
+    //             var userData=JSON.parse(response);
+    //             console.log(userData);
+    //             for (var i = 0; i < userData.length; i++){
+    //                 if(userData[i] != null) {
+    //                     $('#prix_fixe').attr('disabled','disabled');
+    //                     $('#prix_fixe').val(userData[i].prix_fixe);
+    //                 }
+
+    //             }
+
+    //         },
+    //         error:function(error){
+    //             console.log(error)
+    //         }
+    //     });
+    //  });
+</script>
 </html>
