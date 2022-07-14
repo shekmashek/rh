@@ -44,7 +44,8 @@
 </head>
 <body>
 <div class="container">
-    <form action="">
+    <form action="{{route('inscription_abonnement')}}" method="POST">
+        @csrf
         <div class="col-md-9">
             <h2>Formation.mg</h2>
             <p class="w-75">Veillez selectionner les abonnements que vous voulez acheter, en selectionnant l'option pour l'abonnement avec les prix et les avantages affichés ci-dessous.</p>
@@ -63,16 +64,18 @@
                             <p class="description_formation card-text"> Le prix de l'abonnement varie en fonction du nombre d'employé, d'utilisateur et de formateur.</p>
                             <p>Choisissez votre abonnement:</p>
                             @foreach ($abonnement_cfp as $ab_cfp)
-                                <div class="form-check mx-2 my-2">
-                                    <input class="form-check-input" type="radio" name="of" id="flexRadioDefault1">
-                                    <label class="form-check-label" for="flexRadioDefault1">
-                                        @if($ab_cfp->illimite == 0)
-                                            <b>{{$ab_cfp->nom_type}} -  {{number_format($ab_cfp->tarif,0,',','.')}} ar/mois :</b><span class="description"> {{$ab_cfp->nb_utilisateur}} utilisateurs - {{$ab_cfp->nb_formateur}} formateurs - {{$ab_cfp->nb_projet}} projets</span> </label>
-                                        @endif
-                                        @if($ab_cfp->illimite == 1)
-                                            <b>{{$ab_cfp->nom_type}} - {{number_format($ab_cfp->tarif,0,',','.')}}ar/mois : </b><span class="description"> utilisateurs illimités -  formateurs illimités -  projets illimités</span></label>
-                                        @endif
-                                </div>
+                                @if($ab_cfp->id != 1)
+                                    <div class="form-check mx-2 my-2">
+                                        <input class="form-check-input" value = {{$ab_cfp->id}} type="radio" name="of" id="flexRadioDefault1">
+                                        <label class="form-check-label" for="flexRadioDefault1">
+                                            @if($ab_cfp->illimite == 0)
+                                                <b>{{$ab_cfp->nom_type}} -  {{number_format($ab_cfp->tarif,0,',','.')}} ar/mois :</b><span class="description"> {{$ab_cfp->nb_utilisateur}} utilisateurs - {{$ab_cfp->nb_formateur}} formateurs - {{$ab_cfp->nb_projet}} projets</span> </label>
+                                            @endif
+                                            @if($ab_cfp->illimite == 1)
+                                                <b>{{$ab_cfp->nom_type}} - {{number_format($ab_cfp->tarif,0,',','.')}}ar/mois : </b><span class="description"> utilisateurs illimités -  formateurs illimités -  projets illimités</span></label>
+                                            @endif
+                                    </div>
+                                @endif
                             @endforeach
                         </div>
                     </div>
@@ -91,16 +94,18 @@
                             <p class="description_formation card-text"> Le prix de l'abonnement varie en fonction du nombre d'employé, d'utilisateur et de formateur.</p>
                             <p>Choisissez votre abonnement:</p>
                             @foreach ($abonnement_etp as $ab_etp)
-                                <div class="form-check mx-2 my-2">
-                                    <input class="form-check-input" type="radio" name="entreprise" id="flexRadioDefault11">
-                                    <label class="form-check-label" for="flexRadioDefault11">
-                                        @if($ab_etp->illimite == 0)
-                                            <b>{{$ab_etp->nom_type}} - {{number_format($ab_etp->tarif,0,',','.')}}ar/mois : </b><span class="description">{{$ab_etp->nb_utilisateur}}  utilisateurs - {{$ab_etp->nb_formateur}} formateurs - {{$ab_etp->min_emp}} à {{$ab_etp->max_emp}} employés</span></label>
-                                        @endif
-                                        @if($ab_etp->illimite == 1)
-                                            <b>{{$ab_etp->nom_type}} - {{number_format($ab_etp->tarif,0,',','.')}}ar/mois : </b><span class="description"> utilisateurs illimités -  formateurs illimités -  employés illimités</span></label>
-                                        @endif
-                                </div>
+                                @if($ab_etp->id != 1)
+                                    <div class="form-check mx-2 my-2">
+                                        <input class="form-check-input" type="radio" value = {{$ab_etp->id}} name="entreprise" id="flexRadioDefault11">
+                                        <label class="form-check-label" for="flexRadioDefault11">
+                                            @if($ab_etp->illimite == 0)
+                                                <b>{{$ab_etp->nom_type}} - {{number_format($ab_etp->tarif,0,',','.')}}ar/mois : </b><span class="description">{{$ab_etp->nb_utilisateur}}  utilisateurs - {{$ab_etp->nb_formateur}} formateurs - {{$ab_etp->min_emp}} à {{$ab_etp->max_emp}} employés</span></label>
+                                            @endif
+                                            @if($ab_etp->illimite == 1)
+                                                <b>{{$ab_etp->nom_type}} - {{number_format($ab_etp->tarif,0,',','.')}}ar/mois : </b><span class="description"> utilisateurs illimités -  formateurs illimités -  employés illimités</span></label>
+                                            @endif
+                                    </div>
+                                @endif
                             @endforeach
                         </div>
                     </div>
@@ -146,8 +151,8 @@
                                 @foreach ($limite_type as $limite )
                                     @if($limite->autres_types_abonnements_id == $serv->id)
                                         <div class="form-check mx-3 my-3">
-                                            <input class="form-check-input" type="radio" name="autres_{{$serv->id}}" id="flexRadioDefault44_{{$serv->id}}">
-                                            <label class="form-check-label" for="flexRadioDefault44_{{$serv->id}}">
+                                            <input class="form-check-input" type="radio" value={{$limite->autres_types_abonnements_id}} name="autres_{{$limite->autres_types_abonnements_id}}" id="flexRadioDefault44_{{$limite->autres_types_abonnements_id}}">
+                                            <label class="form-check-label" for="flexRadioDefault44_{{$autres_types_abonnements_id->id}}">
                                                 <b>{{number_format($limite->prix_par_employe,0,',','.')}} ar/employé : </b><span class="description">{{$limite->min_emp}} à {{$limite->max_emp}} employés</span></label>
                                         </div>
                                     @endif

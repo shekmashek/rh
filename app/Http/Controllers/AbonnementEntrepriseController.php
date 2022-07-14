@@ -16,7 +16,7 @@ class AbonnementEntrepriseController extends Controller
      */
     public function index()
     {
-        //
+
     }
 
     /**
@@ -37,6 +37,7 @@ class AbonnementEntrepriseController extends Controller
      */
     public function store(Request $request)
     {
+        dd($request->all());
         $entreprise_id = $this->fonct->findWhereMultiOne("employers",["user_id"],[Auth::user()->id])->entreprise_id;
         $paie = $request->paie;
         $temps = $request->temps;
