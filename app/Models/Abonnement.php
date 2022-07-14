@@ -37,6 +37,15 @@ class Abonnement extends Model
         $today = Carbon::today()->toDateString();
         DB::insert('insert into entreprise_autres_abonnements (entreprise_id,autres_types_abonnements_id,date_demande) values (?,?,?)', [$entreprise_id,$service,$today]);
     }
+
+    /**Enregistrer abonnement pour l'offre formation */
+    public function enregistrer_abonnement_formation_etp($type_abonnement_id,$entreprise_id){
+        DB::insert('insert into abonnements (date_demande,type_abonnement_id,entreprise_id) values (?,?,?) ',[$this->today,$type_abonnement_id,$entreprise_id]);
+    }
+    public function enregistrer_abonnement_formation_of($type_abonnement_id,$cfp_id){
+        DB::insert('insert into abonnements_cfp (date_demande,type_abonnement_id,cfp_id) values (?,?,?) ',[$this->today,$type_abonnement_id,$cfp_id]);
+    }
+    /**Trouver le dernier num facture */
     public function findMax($nomTab, $nomCol)
     {
         $maxVal =  DB::select('SELECT MAX('.$nomCol.') as id_max from '.$nomTab.'');

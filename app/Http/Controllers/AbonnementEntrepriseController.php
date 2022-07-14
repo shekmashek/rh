@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Abonnement;
+use App\Models\FonctionGenerique;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -14,6 +16,16 @@ class AbonnementEntrepriseController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+        // $this->middleware('auth');
+        // $this->middleware(function ($request, $next) {
+        //     if(Auth::user()->exists == false) return redirect()->route('sign-in');
+        //     return $next($request);
+        // });
+        $this->fonct  = new FonctionGenerique();
+        $this->abonnement = new Abonnement();
+    }
     public function index()
     {
 
@@ -37,20 +49,18 @@ class AbonnementEntrepriseController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
         $entreprise_id = $this->fonct->findWhereMultiOne("employers",["user_id"],[Auth::user()->id])->entreprise_id;
-        $paie = $request->paie;
-        $temps = $request->temps;
-        $recrutement = $request->recrutement;
-        $personnel = $request->personnel;
-        $conge = $request->conge;
+
+        $donnees = $request->all();
+
+        for ($i=1; $i < count($donnees["id_type"]); $i++) {
+            if(isset($donnees["autres_".$i]) ) var_dump($donnees["autres_".$i]
+        );
+        }
+        // if($request->entreprise != null)  $this->abonnement->enregistrer_abonnement_formation_etp($entreprise_id,$request->entreprise);
+        // if($request->of != null)  $this->abonnement->enregistrer_abonnement_formation_of($entreprise_id,$request->entreprise);
 
 
-        if($paie != null) $this->abonnement->enregistrer_abonnement_entreprise($entreprise_id,$paie);
-        if($temps != null) $this->abonnement->enregistrer_abonnement_entreprise($entreprise_id,$temps);
-        if($recrutement != null) $this->abonnement->enregistrer_abonnement_entreprise($entreprise_id,$recrutement);
-        if($personnel != null) $this->abonnement->enregistrer_abonnement_entreprise($entreprise_id,$personnel);
-        if($conge != null) $this->abonnement->enregistrer_abonnement_entreprise($entreprise_id,$conge);
 
     }
 

@@ -43,7 +43,7 @@ Route::get('condition_generale_de_vente', 'ConditionController@index')->name('co
 Auth::routes();
 
 
-Route::get('/home', 'HomeController@index')->name('home');
+
 /**Creer nouveau type */
 Route::get('/nouveau', function () {
     return view('superadmin.type');
@@ -51,6 +51,7 @@ Route::get('/nouveau', function () {
 
 
 
+Route::get('/home', 'TypeAbonnementController@index')->name('home');
 /**Enregistrer nouveau type */
 Route::resource('abonnement','TypeAbonnementController');
 Route::post('inscription_abonnement','AbonnementEntrepriseController@store')->name('inscription_abonnement');

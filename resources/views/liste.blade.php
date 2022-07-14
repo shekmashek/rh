@@ -151,8 +151,9 @@
                                 @foreach ($limite_type as $limite )
                                     @if($limite->autres_types_abonnements_id == $serv->id)
                                         <div class="form-check mx-3 my-3">
+                                            <input type="hidden" value={{$limite->autres_types_abonnements_id}} name = "id_type[]">
                                             <input class="form-check-input" type="radio" value={{$limite->autres_types_abonnements_id}} name="autres_{{$limite->autres_types_abonnements_id}}" id="flexRadioDefault44_{{$limite->autres_types_abonnements_id}}">
-                                            <label class="form-check-label" for="flexRadioDefault44_{{$autres_types_abonnements_id->id}}">
+                                            <label class="form-check-label" for="flexRadioDefault44_{{$limite->autres_types_abonnements_id}}">
                                                 <b>{{number_format($limite->prix_par_employe,0,',','.')}} ar/employé : </b><span class="description">{{$limite->min_emp}} à {{$limite->max_emp}} employés</span></label>
                                         </div>
                                     @endif
