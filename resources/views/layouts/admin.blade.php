@@ -74,22 +74,13 @@
                                 {{-- @can('isSuperAdmin') --}}
                                     <a class="dropdown-toggle p-1" id="dropdownMenuCreer" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true"><i class='bx bx-plus-medical icon_creer_admin'></i></a>
                                     <ul class="dropdown-menu mt-3" aria-labelledby="dropdownMenuCreer">
-                                        <li>
-                                            <a class="dropdown-item"
-                                            {{-- href="{{route('nouveau_type')}}" --}}
-                                            > <i
+                                        <li><a class="dropdown-item" href="#"> <i
                                                     class='bx bxs-doughnut-chart icon_plus'></i>&nbsp;Nouveau type
                                             </a></li>
-                                            <li id="abo">
-                                                <a class="dropdown-item"
-                                                {{-- href="{{route('nouveau_coupon')}}" --}}
-                                                > <i
+                                            <li id="abo"><a class="dropdown-item" href="#"> <i
                                                 class='bx bx-money '></i>&nbsp;Nouveau coupon
                                         </a></li>
-                                        <li id="formation">
-                                            <a class="dropdown-item"
-                                            {{-- href="{{route('nouveau_formation')}}" --}}
-                                            > <i
+                                        <li id="formation"><a class="dropdown-item" href="#"> <i
                                             class='bx bx-cross '></i>&nbsp;Nouvelle formation
                                         </a></li>
                                     </ul>
@@ -226,15 +217,19 @@
             {{-- content --}}
         </div>
 
-    <script src="https://code.iconify.design/2/2.1.2/iconify.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.2/umd/popper.min.js"
-        integrity="sha512-aDciVjp+txtxTJWsp8aRwttA0vR2sJMk/73ZT7ExuEHv7I5E6iyyobpFOlEFkq59mWW8ToYGuVZFnwhwIUisKA=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/js/bootstrap.min.js" integrity="sha512-a6ctI6w1kg3J4dSjknHj3aWLEbjitAXAjLDRUxo2wyYmDFRcz2RJuQr5M3Kt8O/TtUSp8n2rAyaXYy1sjoKmrQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+        <script src="https://code.iconify.design/2/2.1.2/iconify.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.2/umd/popper.min.js"
+            integrity="sha512-aDciVjp+txtxTJWsp8aRwttA0vR2sJMk/73ZT7ExuEHv7I5E6iyyobpFOlEFkq59mWW8ToYGuVZFnwhwIUisKA=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        {{-- <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js"
+            integrity="sha384-rOA1PnstxnOBLzCLMcre8ybwbTmemjzdNlILg8O7z1lUkLXozs4DHonlDtnE7fpc" crossorigin="anonymous">
+        </script> --}}
 
-    <script src="{{asset('js/admin.js')}}"></script>
-    <script src="{{asset('js/apprendre.js')}}"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/js/bootstrap.min.js" integrity="sha512-a6ctI6w1kg3J4dSjknHj3aWLEbjitAXAjLDRUxo2wyYmDFRcz2RJuQr5M3Kt8O/TtUSp8n2rAyaXYy1sjoKmrQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+        <script src="{{asset('js/admin.js')}}"></script>
+        <script src="{{asset('js/apprendre.js')}}"></script>
 </body>
 
 </html>
