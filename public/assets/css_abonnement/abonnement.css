@@ -1,0 +1,26 @@
+.container{
+    margin: 0 auto;
+}
+.card{
+    border:none
+}
+.card-title, .description_formation {
+    font-size: 80%
+}
+.description{
+    font-size:80%;
+}
+.form-check{
+    font-size:95%;
+}
+
+.icon {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.icon img{
+    width: 60%;
+}

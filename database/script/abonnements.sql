@@ -29,8 +29,8 @@ CREATE TABLE `entreprise_autres_abonnements` (
   `entreprise_id` bigint(20) UNSIGNED NOT NULL  REFERENCES entreprises(id) ON DELETE CASCADE,
   `limite_autres_abonnements_id` bigint(20) UNSIGNED NOT NULL  REFERENCES limite_autres_abonnements(id) ON DELETE CASCADE,
   `date_demande` date default current_timestamp(),
-  `date_debut` date DEFAULT current_timestamp(),
-  `date_fin` date DEFAULT current_timestamp(),
+  `date_debut` date DEFAULT NULL,
+  `date_fin` date DEFAULT NULL,
   `activite` boolean not null default false,
   `coupon_id` bigint(20) unsigned default 0,
   `created_at` timestamp NULL DEFAULT  current_timestamp(),
@@ -43,7 +43,7 @@ CREATE TABLE `factures_autres_abonnements` (
   `invoice_date` date NOT NULL,
   `due_date` date NOT NULL,
   `num_facture` bigint(20) NOT NULL,
-  `statut` varchar(55) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Non payé',
+  `statut` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Non payé',
   `montant_facture` decimal(15,2) DEFAULT 0.00,
   `created_at` timestamp NULL DEFAULT  current_timestamp(),
   `updated_at` timestamp NULL DEFAULT  current_timestamp()
@@ -73,3 +73,32 @@ CREATE OR REPLACE VIEW v_autres_abonnement_limite as SELECT
 FROM
     limite_autres_abonnements limite
 JOIN v_type_services_autres_types_abonnements as v_type_serv ON v_type_serv.id = limite.autres_types_abonnements_id;
+
+
+CREATE OR REPLACE VIEW v_autres_abonnement_entreprises as SELECT
+    etp_ab.date_demande,
+    etp_ab.date_debut,
+    etp_ab.date_fin,
+    etp_ab.activite,
+    etp_ab.coupon_id,
+    ab_lim.prix_par_employe,
+    ab_lim.min_emp,
+    ab_lim.max_emp,
+    ab_lim.autres_types_abonnements_id,
+    ab_lim.prix_fixe,
+    ab_lim.service_id,
+    ab_lim.type_service,
+    fact.invoice_date,
+    fact.due_date,
+    fact.num_facture,
+    fact.statut,
+    fact.montant_facture,
+    etp.id as entreprise_id,
+    etp.*,
+    month(fact.due_date) as mois_actuel,
+    year(fact.due_date) as annee_actuel
+FROM
+    entreprise_autres_abonnements etp_ab
+JOIN v_autres_abonnement_limite ab_lim ON ab_lim.id = etp_ab.limite_autres_abonnements_id
+JOIN entreprises etp ON etp.id = etp_ab.entreprise_id
+JOIN factures_autres_abonnements fact ON fact.entreprise_autres_abonnements_id = etp_ab.id;

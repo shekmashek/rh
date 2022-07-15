@@ -44,6 +44,7 @@ Auth::routes();
 
 
 
+Route::get('/home', 'HomeController@index')->name('home');
 /**Creer nouveau type */
 Route::get('/nouveau', function () {
     return view('superadmin.type');
@@ -56,5 +57,7 @@ Route::get('/home', 'TypeAbonnementController@index')->name('home');
 Route::resource('abonnement','TypeAbonnementController');
 Route::post('inscription_abonnement','AbonnementEntrepriseController@store')->name('inscription_abonnement');
 
+
+Route::get('listeAbonne','AbonnementController@listeAbonne')->name('listeAbonne');
 Route::get('verification','TypeAbonnementController@verification')->name('verification');
 

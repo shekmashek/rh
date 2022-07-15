@@ -38,8 +38,24 @@ class TypeAbonnementController extends Controller
         $etp_last_ab = DB::select('select * from v_abonnement_facture_entreprise where entreprise_id = ? order by facture_id desc limit 1', [$entreprise_id]);
         $cfp_last_ab = DB::select('select * from v_abonnement_facture where cfp_id = ? order by facture_id desc limit 1', [$entreprise_id]);
 
+        /**Recuperation de la liste des services achetés */
+        $liste_service = $this->fonct->findWhere("v_autres_abonnement_entreprises",["entreprise_id"],[$entreprise_id]);
+        $mois_suivant = [];
+        $annee_suivant = [];
 
-        return view('liste',compact('type_service','limite_type','abonnement_etp','abonnement_cfp','type_etp','etp_last_ab','cfp_last_ab'));
+        for ($i=0; $i < count($liste_service); $i++) {
+
+            if($liste_service[$i]->mois_actuel == 12){
+                array_push($mois_suivant,  01);
+                array_push($annee_suivant,  ($liste_service[$i]->annee_actuel) + 1);
+            }
+            else {
+                array_push($mois_suivant,  ($liste_service[$i]->mois_actuel) + 1);
+                array_push($annee_suivant,  $liste_service[$i]->annee_actuel);
+            }
+        }
+
+        return view('abonnement.liste',compact('type_service','limite_type','abonnement_etp','abonnement_cfp','type_etp','etp_last_ab','cfp_last_ab','liste_service','mois_suivant','annee_suivant'));
     }
 
     /**
