@@ -50,13 +50,23 @@ class AbonnementEntrepriseController extends Controller
     public function store(Request $request)
     {
         $entreprise_id = $this->fonct->findWhereMultiOne("employers",["user_id"],[Auth::user()->id])->entreprise_id;
-
+        $nb_emp = count($this->fonct->findWhere("employers",["entreprise_id"],[$entreprise_id]));
         $donnees = $request->all();
 
         for ($i=1; $i < count($donnees["id_type"]); $i++) {
-            if(isset($donnees["autres_".$i]) ) var_dump($donnees["autres_".$i]
-        );
+            if(isset($donnees["autres_".$i]) ) {
+                $this->abonnement->enregistrer_abonnement_entreprise($entreprise_id,$donnees["autres_".$i]);
+                $last_entreprise_autres_abonnements_id = DB::table('entreprise_autres_abonnements')->latest('id')->first()->id;
+                $detail_abonnement = $this->fonct->findWhereMultiOne("v_autres_abonnement_limite",["id"],[$donnees["autres_".$i]]);
+                /**calcul facture en fonction du nombre d'employé */
+                $prix_en_fonction_employe = $detail_abonnement->prix_par_employe * $nb_emp;
+                $montant_total = $prix_en_fonction_employe + $detail_abonnement->prix_fixe;
+                $this->abonnement->insert_factures_abonnements($last_entreprise_autres_abonnements_id,$montant_total);
+            }
         }
+        if(isset($donnees["entreprise"])) $this->fonct->enregistrer_abonnement_formation_etp($donnees["entreprise"],$entreprise_id);
+        if(isset($donnees["of"])) $this->fonct->enregistrer_abonnement_formation_etp($donnees["of"],$entreprise_id);
+        return back();
         // if($request->entreprise != null)  $this->abonnement->enregistrer_abonnement_formation_etp($entreprise_id,$request->entreprise);
         // if($request->of != null)  $this->abonnement->enregistrer_abonnement_formation_of($entreprise_id,$request->entreprise);
 

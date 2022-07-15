@@ -35,7 +35,7 @@ class Abonnement extends Model
     /**CRUD abonnement par entreprise */
     public function enregistrer_abonnement_entreprise($entreprise_id,$service){
         $today = Carbon::today()->toDateString();
-        DB::insert('insert into entreprise_autres_abonnements (entreprise_id,autres_types_abonnements_id,date_demande) values (?,?,?)', [$entreprise_id,$service,$today]);
+        DB::insert('insert into entreprise_autres_abonnements (entreprise_id,limite_autres_abonnements_id,date_demande) values (?,?,?)', [$entreprise_id,$service,$today]);
     }
 
     /**Enregistrer abonnement pour l'offre formation */
@@ -51,16 +51,17 @@ class Abonnement extends Model
         $maxVal =  DB::select('SELECT MAX('.$nomCol.') as id_max from '.$nomTab.'');
         return $maxVal;
     }
-    /** insertion de données dans factures_abonnements_cfp */
-    public function insert_factures_abonnements($id,$invoice_date,$due_date,$montant_facture){
+    /** insertion de données dans factures_autres_abonnements */
+    public function insert_factures_abonnements($id,$montant_facture){
       //generation du numero de facture, on verifie le dernier numero de facture
         $max_id = $this->findMax('factures_autres_abonnements','num_facture')[0]->id_max;
 
         if($max_id == null) $num_facture = 1;
         else $num_facture = $max_id +=  1;
-
+        $today = Carbon::today()->toDateString();
+        $due_date = Carbon::today()->addDays(15)->toDateString();
         $statut = "non payé";
-        DB::insert('insert into factures_autres_abonnements (entreprise_autres_abonnements_id,invoice_date,due_date,num_facture,statut,montant_facture) values (?,?,?,?,?,?)', [$id,$invoice_date,$due_date,$num_facture,$statut,$montant_facture]);
+        DB::insert('insert into factures_autres_abonnements (entreprise_autres_abonnements_id,invoice_date,due_date,num_facture,statut,montant_facture) values (?,?,?,?,?,?)', [$id,$today,$due_date,$num_facture,$statut,$montant_facture]);
     }
 
 }

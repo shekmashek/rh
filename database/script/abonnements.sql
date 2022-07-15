@@ -27,7 +27,7 @@ CREATE TABLE `limite_autres_abonnements` (
 CREATE TABLE `entreprise_autres_abonnements` (
   `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `entreprise_id` bigint(20) UNSIGNED NOT NULL  REFERENCES entreprises(id) ON DELETE CASCADE,
-  `autres_types_abonnements_id` bigint(20) UNSIGNED NOT NULL  REFERENCES autres_types_abonnements(id) ON DELETE CASCADE,
+  `limite_autres_abonnements_id` bigint(20) UNSIGNED NOT NULL  REFERENCES limite_autres_abonnements(id) ON DELETE CASCADE,
   `date_demande` date default current_timestamp(),
   `date_debut` date DEFAULT current_timestamp(),
   `date_fin` date DEFAULT current_timestamp(),
@@ -56,8 +56,20 @@ CREATE OR REPLACE VIEW v_type_services_autres_types_abonnements as SELECT
      t.id,
      t.prix_fixe,
      s.id as service_id,
-     s.type_service
+     s.type_service,
+     l.
 FROM autres_types_abonnements as t
 JOIN type_services as s ON s.id = t.type_service_id
 ;
 
+
+
+CREATE OR REPLACE VIEW v_autres_abonnement_limite as SELECT
+    limite.*,
+    v_type_serv.prix_fixe,
+    v_type_serv.service_id,
+    v_type_serv.type_service
+
+FROM
+    limite_autres_abonnements limite
+JOIN v_type_services_autres_types_abonnements as v_type_serv ON v_type_serv.id = limite.autres_types_abonnements_id;

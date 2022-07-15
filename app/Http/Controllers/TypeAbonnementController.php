@@ -28,11 +28,13 @@ class TypeAbonnementController extends Controller
     public function index()
     {
 
+        $entreprise_id = $this->fonct->findWhereMultiOne("employers",["user_id"],[Auth::user()->id])->entreprise_id;
+        $type_etp = $this->fonct->findWhereMultiOne("entreprises",["id"],[$entreprise_id])->type_entreprise_id;
         $type_service = $this->fonct->findAll("v_type_services_autres_types_abonnements");
         $limite_type = $this->fonct->findAll("limite_autres_abonnements");
         $abonnement_etp = $this->fonct->findAll("type_abonnements_etp");
         $abonnement_cfp = $this->fonct->findAll("type_abonnements_of");
-        return view('liste',compact('type_service','limite_type','abonnement_etp','abonnement_cfp'));
+        return view('liste',compact('type_service','limite_type','abonnement_etp','abonnement_cfp','type_etp'));
     }
 
     /**
