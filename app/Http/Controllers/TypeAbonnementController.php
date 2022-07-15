@@ -34,7 +34,12 @@ class TypeAbonnementController extends Controller
         $limite_type = $this->fonct->findAll("limite_autres_abonnements");
         $abonnement_etp = $this->fonct->findAll("type_abonnements_etp");
         $abonnement_cfp = $this->fonct->findAll("type_abonnements_of");
-        return view('liste',compact('type_service','limite_type','abonnement_etp','abonnement_cfp','type_etp'));
+         /**on verifie le dernier abonnement de l'entreprise et of */
+        $etp_last_ab = DB::select('select * from v_abonnement_facture_entreprise where entreprise_id = ? order by facture_id desc limit 1', [$entreprise_id]);
+        $cfp_last_ab = DB::select('select * from v_abonnement_facture where cfp_id = ? order by facture_id desc limit 1', [$entreprise_id]);
+
+
+        return view('liste',compact('type_service','limite_type','abonnement_etp','abonnement_cfp','type_etp','etp_last_ab','cfp_last_ab'));
     }
 
     /**

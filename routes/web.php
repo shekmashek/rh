@@ -57,3 +57,4 @@ Route::resource('abonnement','TypeAbonnementController');
 Route::post('inscription_abonnement','AbonnementEntrepriseController@store')->name('inscription_abonnement');
 
 Route::get('verification','TypeAbonnementController@verification')->name('verification');
+
