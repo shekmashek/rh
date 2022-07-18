@@ -93,6 +93,7 @@ CREATE OR REPLACE VIEW v_autres_abonnement_entreprises as SELECT
     fact.num_facture,
     fact.statut,
     fact.montant_facture,
+    fact.entreprise_autres_abonnements_id,
     etp.id as entreprise_id,
     etp.*,
     month(fact.due_date) as mois_actuel,

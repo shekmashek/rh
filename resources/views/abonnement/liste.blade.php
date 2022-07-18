@@ -210,6 +210,41 @@
                 </form>
             </div>
             <div class="tab-pane fade show" id="facture">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">Facture #</th>
+                        <th scope="col">Montant</th>
+                        <th scope="col">Invoice Date</th>
+                        <th scope="col">Due Date</th>
+                        <th scope="col">Abonnement</th>
+                        <th scope="col">Statut</th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                            @foreach ($facture as $fact)
+                                <tr>
+                                    <td>{{$fact->num_facture}}</td>
+                                    <td> {{number_format($fact->total_facture,0,',','.')}} Ar</td>
+                                    <td>@php echo date("d-m-Y",strtotime($fact->invoice_date)) @endphp</td>
+                                    <td>  @php echo date("d-m-Y",strtotime($fact->due_date)) @endphp</td>
+                                    <td>@for ($i = 0;$i<count($liste_service);$i++)
+                                            @if($i < count($liste_service)-1)
+                                            {{$liste_service[$i]->type_service}} ,
+                                            @else
+                                            {{$liste_service[$i]->type_service}}
+                                            @endif
+                                        @endfor
+                                    </td>
+                                    <td>{{$fact->statut}}</td>
+                                </tr>
+
+                        @endforeach
+
+                    </tbody>
+                </table>
             </div>
         </div>
 

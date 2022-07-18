@@ -130,14 +130,14 @@
                                                 <div class="col-5 text-center">
                                                     <div class="logout">
                                                         <a
-                                                        {{-- href="{{ route('logout') }}" --}}
+                                                        href="{{ route('logout') }}"
                                                         onclick="event.preventDefault(); document.getElementById('logout-form').submit();"></a>
                                                         <a
-                                                        {{-- href="{{ route('logout') }}" --}}
+                                                        href="{{ route('logout') }}"
                                                         onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class=" text-center">Se déconnecter</a>
-                                                        {{-- <form action="{{ route('logout') }}" id="logout-form" method="POST" class="d-none">
+                                                        <form action="{{ route('logout') }}" id="logout-form" method="POST" class="d-none">
                                                             @csrf
-                                                        </form> --}}
+                                                        </form>
                                                     </div>
                                                 </div>
                                             </div>
@@ -154,12 +154,10 @@
                                                 </div>
                                                 <div class="col-10 ps-4">
                                                     <h6 class="mb-0 ">
-                                                        {{-- {{Auth::user()->name}} --}}
-                                                        rayan
+                                                        {{Auth::user()->name}}
                                                     </h6>
                                                     <h6 class="mb-0 text-muted text_mail">
-                                                        {{-- {{Auth::user()->email}} --}}
-                                                        rayan@gmail.com
+                                                        {{Auth::user()->email}}
                                                     </h6>
                                                     <p id="nom_etp" class="mt-2"></p>
                                                 </div>
@@ -169,7 +167,7 @@
                                                     <div class="row">
                                                         <div class="col">
                                                             <input type="text" value="
-                                                            {{-- {{Auth::user()->id}} --}}
+                                                            {{Auth::user()->id}}
                                                             " id="id_user" hidden>
                                                             <span class="text-muted p-0 test_font">Connécté en tant que :</span>
                                                         </div>
