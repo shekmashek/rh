@@ -31,4 +31,5 @@ class AbonnementController extends Controller
         $liste_coupon = $this->fonct->findAll('coupon');
         return view('superadmin.activation-abonnement', compact('liste_coupon','liste','cfpListe','typeAbonnement_etp','typeAbonnement_of'));
     }
+
 }

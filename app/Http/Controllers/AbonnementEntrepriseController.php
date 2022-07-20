@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use PhpParser\Node\Expr\FuncCall;
 
 class AbonnementEntrepriseController extends Controller
 {
@@ -54,15 +55,15 @@ class AbonnementEntrepriseController extends Controller
         $nb_emp = count($this->fonct->findWhere("employers",["entreprise_id"],[$entreprise_id]));
         $donnees = $request->all();
 
-        for ($i=1; $i < count($donnees["id_type"]); $i++) {
+        for ($i=1; $i <= count($donnees["id_type"]); $i++) {
             if(isset($donnees["autres_".$i]) ) {
                 $this->abonnement->enregistrer_abonnement_entreprise($entreprise_id,$donnees["autres_".$i]);
-                $last_entreprise_autres_abonnements_id = DB::table('entreprise_autres_abonnements')->latest('id')->first()->id;
+                $last_entreprise_autres_abonnements_id = DB::table('entreprise_autres_abonnements')->latest('id')->first();
                 $detail_abonnement = $this->fonct->findWhereMultiOne("v_autres_abonnement_limite",["id"],[$donnees["autres_".$i]]);
                 /**calcul facture en fonction du nombre d'employé */
                 $prix_en_fonction_employe = $detail_abonnement->prix_par_employe * $nb_emp;
                 $montant_total = $prix_en_fonction_employe + $detail_abonnement->prix_fixe;
-                $this->abonnement->insert_factures_abonnements($last_entreprise_autres_abonnements_id,$montant_total);
+                $this->abonnement->insert_factures_abonnements($last_entreprise_autres_abonnements_id->id,$last_entreprise_autres_abonnements_id->entreprise_id,$montant_total);
             }
         }
 
@@ -116,5 +117,13 @@ class AbonnementEntrepriseController extends Controller
     public function destroy($id)
     {
         //
+    }
+    /**detail de la facture */
+    public function detail_facture($id){
+        $facture = $this->fonct->findWhereMultiOne("factures_autres_abonnements",["num_facture"],[$id]);
+        /**MBOLA MILA AMBOARINA LE FIRECUPERER NA LISTE SERVICE AMLE FACTURE ATAMBATRA HO IRAY */
+        $liste_service = $this->fonct->findWhere("v_autres_abonnement_entreprises",["invoice_date","entreprise_id"],[$facture->invoice_date,$facture->entreprise_id]);
+        $nb_employe = count($this->fonct->findWhere("employers",["entreprise_id"],[$facture->entreprise_id]));
+        return view('abonnement.detail_facture',compact('facture','liste_service','nb_employe'));
     }
 }

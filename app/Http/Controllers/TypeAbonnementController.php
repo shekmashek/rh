@@ -44,7 +44,6 @@ class TypeAbonnementController extends Controller
 
         $mois_suivant = [];
         $annee_suivant = [];
-        $total_facture = 0;
 
         for ($i=0; $i < count($liste_service); $i++) {
 
@@ -56,7 +55,6 @@ class TypeAbonnementController extends Controller
                 array_push($mois_suivant,  ($liste_service[$i]->mois_actuel) + 1);
                 array_push($annee_suivant,  $liste_service[$i]->annee_actuel);
             }
-            $total_facture += $liste_service[$i]->montant_facture;
         }
         /**Liste des factures */
         $facture = DB::select("select sum(montant_facture) as total_facture,num_facture,invoice_date,due_date,statut from v_autres_abonnement_entreprises where entreprise_id = ? group by entreprise_id,invoice_date,due_date",[$entreprise_id]);

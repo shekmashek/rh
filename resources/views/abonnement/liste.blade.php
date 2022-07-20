@@ -226,21 +226,23 @@
 
                             @foreach ($facture as $fact)
                                 <tr>
-                                    <td>{{$fact->num_facture}}</td>
+                                    <td><a href="{{route('detail_facture',$fact->num_facture)}}">{{$fact->num_facture}}</a></td>
                                     <td> {{number_format($fact->total_facture,0,',','.')}} Ar</td>
                                     <td>@php echo date("d-m-Y",strtotime($fact->invoice_date)) @endphp</td>
                                     <td>  @php echo date("d-m-Y",strtotime($fact->due_date)) @endphp</td>
                                     <td>@for ($i = 0;$i<count($liste_service);$i++)
-                                            @if($i < count($liste_service)-1)
-                                            {{$liste_service[$i]->type_service}} ,
-                                            @else
-                                            {{$liste_service[$i]->type_service}}
+                                            @if ($fact->invoice_date == $liste_service[$i]->invoice_date)
+                                                @if($i < count($liste_service)-1)
+                                                {{$liste_service[$i]->type_service}} ,
+                                                @else
+                                                {{$liste_service[$i]->type_service}}
+                                                @endif
                                             @endif
+
                                         @endfor
                                     </td>
                                     <td>{{$fact->statut}}</td>
                                 </tr>
-
                         @endforeach
 
                     </tbody>

@@ -52,16 +52,15 @@ class Abonnement extends Model
         return $maxVal;
     }
     /** insertion de données dans factures_autres_abonnements */
-    public function insert_factures_abonnements($id,$montant_facture){
+    public function insert_factures_abonnements($id,$entreprise_id,$montant_facture){
       //generation du numero de facture, on verifie le dernier numero de facture
         $max_id = $this->findMax('factures_autres_abonnements','num_facture')[0]->id_max;
-
         if($max_id == null) $num_facture = 1;
         else $num_facture = $max_id +=  1;
         $today = Carbon::today()->toDateString();
         $due_date = Carbon::today()->addDays(15)->toDateString();
         $statut = "non payé";
-        DB::insert('insert into factures_autres_abonnements (entreprise_autres_abonnements_id,invoice_date,due_date,num_facture,statut,montant_facture) values (?,?,?,?,?,?)', [$id,$today,$due_date,$num_facture,$statut,$montant_facture]);
+        DB::insert('insert into factures_autres_abonnements (entreprise_autres_abonnements_id,entreprise_id,invoice_date,due_date,num_facture,statut,montant_facture) values (?,?,?,?,?,?,?)', [$id,$entreprise_id,$today,$due_date,$num_facture,$statut,$montant_facture]);
     }
 
 }

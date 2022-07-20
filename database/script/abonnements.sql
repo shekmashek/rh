@@ -40,6 +40,7 @@ CREATE TABLE `entreprise_autres_abonnements` (
 CREATE TABLE `factures_autres_abonnements` (
   `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `entreprise_autres_abonnements_id` bigint(20) UNSIGNED NOT NULL  REFERENCES entreprise_autres_abonnements(id) ON DELETE CASCADE,
+  `entreprise_id` bigint(20) UNSIGNED NOT NULL  REFERENCES entreprises(id) ON DELETE CASCADE,
   `invoice_date` date NOT NULL,
   `due_date` date NOT NULL,
   `num_facture` bigint(20) NOT NULL,
@@ -96,8 +97,8 @@ CREATE OR REPLACE VIEW v_autres_abonnement_entreprises as SELECT
     fact.entreprise_autres_abonnements_id,
     etp.id as entreprise_id,
     etp.*,
-    month(fact.due_date) as mois_actuel,
-    year(fact.due_date) as annee_actuel
+    month(fact.invoice_date) as mois_actuel,
+    year(fact.invoice_date) as annee_actuel
 FROM
     entreprise_autres_abonnements etp_ab
 JOIN v_autres_abonnement_limite ab_lim ON ab_lim.id = etp_ab.limite_autres_abonnements_id
