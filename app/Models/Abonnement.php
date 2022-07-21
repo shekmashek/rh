@@ -10,6 +10,7 @@ use Exception;
 
 class Abonnement extends Model
 {
+
     /**Crud type d'abonnement */
     public function enregistrer_type_abonnement($nom_type,$prix_fixe,$prix_par_employe,$min_emp,$max_emp){
 
