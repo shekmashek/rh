@@ -10,6 +10,28 @@ use Exception;
 
 class Abonnement extends Model
 {
+    /**select from v_type_services_autres_types_abonnements ,limite_autres_abonnements,type_abonnements_etp,type_abonnements_of */
+    public function liste_services_autres_types_abonnements(){
+       $req = DB::select('select service_id,type_service,prix_fixe,id from v_type_services_autres_types_abonnements');
+       return $req;
+    }
+    public function liste_limite_autres_abonnements(){
+        $req = DB::select('select autres_types_abonnements_id,id,prix_par_employe,min_emp,max_emp from limite_autres_abonnements');
+        return $req;
+    }
+    public function liste_type_abonnements_etp(){
+        $req = DB::select('select id,illimite,nom_type,tarif,nb_utilisateur,nb_formateur,min_emp,max_emp from type_abonnements_etp ');
+        return $req;
+    }
+    public function liste_type_abonnements_of(){
+        $req = DB::select('select id,illimite,nom_type,tarif,nb_utilisateur,nb_formateur,nb_projet from type_abonnements_of');
+        return $req;
+    }
+      /**Recuperation de la liste des services achetés d'une entreprise spécifié*/
+    public function liste_autres_abonnement_entreprises($entreprise_id){
+        $req = DB::select('select invoice_date,type_service,mois_actuel,annee_actuel,date_demande,montant_facture,activite from v_autres_abonnement_entreprises where entreprise_id = ?', [$entreprise_id]);
+        return $req;
+    }
 
     /**Crud type d'abonnement */
     public function enregistrer_type_abonnement($nom_type,$prix_fixe,$prix_par_employe,$min_emp,$max_emp){

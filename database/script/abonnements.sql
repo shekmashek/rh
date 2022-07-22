@@ -14,6 +14,8 @@ CREATE TABLE `autres_types_abonnements` (
   `prix_fixe`  decimal(15,2)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+
+
 CREATE TABLE `limite_autres_abonnements` (
   `id` bigint(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `prix_par_employe`  decimal(15,2),

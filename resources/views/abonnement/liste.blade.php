@@ -67,7 +67,7 @@
             <div class="tab-pane fade show" id="abonnement">
                 <form action="{{route('inscription_abonnement')}}" method="POST">
                     @csrf
-                    @if($cfp_last_ab!=null ||  $cfp_last_ab!=null)
+                    @if($etp_last_ab!=null ||  $cfp_last_ab!=null)
                         <div class="col-md-9">
                             <h2>Formation.mg</h2>
                             <p class="w-75">Veillez selectionner les services que vous voulez acheter, en selectionnant l'option pour l'abonnement avec les prix et les avantages affichés ci-dessous.</p>
@@ -108,8 +108,8 @@
                                         @endif
                                     @endif
                                 @endif
-                                @if($cfp_last_ab!=null)
-                                    @if($cfp_last_ab[0]->type_arret != null)
+                                @if($etp_last_ab!=null)
+                                    @if($etp_last_ab[0]->type_arret != null)
                                         @if($type_etp == 1)
                                             <div class="col">
                                                 <div class="card shadow my-5">
@@ -223,10 +223,10 @@
                     </tr>
                     </thead>
                     <tbody>
-
+                            @php $j = 1; @endphp
                             @foreach ($facture as $fact)
                                 <tr>
-                                    <td><a href="{{route('detail_facture',$fact->num_facture)}}">{{$fact->num_facture}}</a></td>
+                                    <td><a href="{{route('detail_facture',$fact->num_facture)}}">{{$j}}</a></td>
                                     <td> {{number_format($fact->total_facture,0,',','.')}} Ar</td>
                                     <td>@php echo date("d-m-Y",strtotime($fact->invoice_date)) @endphp</td>
                                     <td>  @php echo date("d-m-Y",strtotime($fact->due_date)) @endphp</td>
@@ -242,8 +242,9 @@
                                         @endfor
                                     </td>
                                     <td>{{$fact->statut}}</td>
+                                    @php $j+=1; @endphp
                                 </tr>
-                        @endforeach
+                            @endforeach
 
                     </tbody>
                 </table>

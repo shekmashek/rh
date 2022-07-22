@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\FonctionGenerique;
 use App\Models\Abonnement;
+use App\Models\Employe;
 use Illuminate\Support\Facades\Auth;
 
 class TypeAbonnementController extends Controller
@@ -24,24 +25,28 @@ class TypeAbonnementController extends Controller
         // });
         $this->fonct  = new FonctionGenerique();
         $this->abonnement = new Abonnement();
+        $this->employe = new Employe();
     }
     public function index()
     {
 
-        $entreprise_id = $this->fonct->findWhereMultiOne("employers",["user_id"],[Auth::user()->id])->entreprise_id;
-        $type_etp = $this->fonct->findWhereMultiOne("entreprises",["id"],[$entreprise_id])->type_entreprise_id;
+        // $entreprise_id = $this->fonct->findWhereMultiOne("employers",["user_id"],[Auth::user()->id])->entreprise_id;
+        $entreprise_id = $this->employe->employe_info(Auth::user()->id)->entreprise_id;
 
-        $type_service = $this->fonct->findAll("v_type_services_autres_types_abonnements");
+        $type_etp = $this->employe->entreprise_info($entreprise_id)->type_entreprise_id;
 
-        $limite_type = $this->fonct->findAll("limite_autres_abonnements");
-        $abonnement_etp = $this->fonct->findAll("type_abonnements_etp");
-        $abonnement_cfp = $this->fonct->findAll("type_abonnements_of");
+
+        $type_service = $this->abonnement->liste_services_autres_types_abonnements();
+        $limite_type = $this->abonnement->liste_limite_autres_abonnements();
+        $abonnement_etp = $this->abonnement->liste_type_abonnements_etp();
+        $abonnement_cfp = $this->abonnement->liste_type_abonnements_of();
+
          /**on verifie le dernier abonnement de l'entreprise et of */
-        $etp_last_ab = DB::select('select * from v_abonnement_facture_entreprise where entreprise_id = ? order by facture_id desc limit 1', [$entreprise_id]);
-        $cfp_last_ab = DB::select('select * from v_abonnement_facture where cfp_id = ? order by facture_id desc limit 1', [$entreprise_id]);
+        $etp_last_ab = DB::select('select type_arret from v_abonnement_facture_entreprise where entreprise_id = ? order by facture_id desc limit 1', [$entreprise_id]);
+        $cfp_last_ab = DB::select('select type_arret from v_abonnement_facture where cfp_id = ? order by facture_id desc limit 1', [$entreprise_id]);
 
         /**Recuperation de la liste des services achetés */
-        $liste_service = $this->fonct->findWhere("v_autres_abonnement_entreprises",["entreprise_id"],[$entreprise_id]);
+        $liste_service = $this->abonnement->liste_autres_abonnement_entreprises($entreprise_id);
         // $liste_service = DB::select('select *,sum(montant_facture) as total_facture from v_autres_abonnement_entreprises where entreprise_id = ?',[$entreprise_id]);
 
         $mois_suivant = [];

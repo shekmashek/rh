@@ -55,6 +55,7 @@ Route::get('/nouveau', function () {
 Route::get('/home', 'TypeAbonnementController@index')->name('home');
 /**Enregistrer nouveau type */
 Route::resource('abonnement','TypeAbonnementController');
+Route::get('nouveeau_type','TypeAbonnementController@create')->name('nouveeau_type');
 Route::post('inscription_abonnement','AbonnementEntrepriseController@store')->name('inscription_abonnement');
 
 
