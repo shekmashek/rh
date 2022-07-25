@@ -63,3 +63,4 @@ Route::get('listeAbonne','AbonnementController@listeAbonne')->name('listeAbonne'
 Route::get('verification','TypeAbonnementController@verification')->name('verification');
 Route::get('/detail_facture/{id}','AbonnementEntrepriseController@detail_facture')->name('detail_facture');
 
+

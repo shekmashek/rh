@@ -11,10 +11,11 @@
         "php": "^8.0",
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
-        "guzzlehttp/guzzle": "^6.3.1|^7.0.1",
+        "guzzlehttp/guzzle": "^7.4",
         "laravel/framework": "^9.0",
         "laravel/ui": "^3.4",
-        "psr/log": "^3.0"
+        "psr/log": "^3.0",
+        "ext-curl": "*"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.7",

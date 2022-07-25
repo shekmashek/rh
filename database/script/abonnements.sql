@@ -59,8 +59,7 @@ CREATE OR REPLACE VIEW v_type_services_autres_types_abonnements as SELECT
      t.id,
      t.prix_fixe,
      s.id as service_id,
-     s.type_service,
-     l.
+     s.type_service
 FROM autres_types_abonnements as t
 JOIN type_services as s ON s.id = t.type_service_id
 ;
@@ -84,6 +83,7 @@ CREATE OR REPLACE VIEW v_autres_abonnement_entreprises as SELECT
     etp_ab.date_fin,
     etp_ab.activite,
     etp_ab.coupon_id,
+    etp_ab.limite_autres_abonnements_id,
     ab_lim.prix_par_employe,
     ab_lim.min_emp,
     ab_lim.max_emp,
