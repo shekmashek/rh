@@ -32,70 +32,48 @@ class TypeAbonnementController extends Controller
     }
     public function index()
     {
-        // $response = Http::accept('application/json')->get('http://127.0.0.1:8002/api/genererFactureParNombreEmploye/5');
-    //      $test = Http::get('127.0.0.1:8002/api/test');
-    //    return $test;
+        $entreprise_id = $this->fonct->findWhereMultiOne("employers",["user_id"],[Auth::user()->id])->entreprise_id;
+      /**appel api generation de facture pour abonnement*/
         try {
-            $response = Http::timeout(3)->get('https://127.0.0.1:8002/api/test');
-            $data = $response->json();
+            $response = Http::get('http://rh.mg/api/genererFactureParNombreEmploye/'.$entreprise_id);
         } catch(\Illuminate\Http\Client\ConnectionException $e) {
-            return view('error')->with('errorMessage', $e->getMessage());
+            dd('erreur');
         }
 
-
-        // $response = $client->get('http://127.0.0.1:8000/api/genererFactureParNombreEmploye/5');
-        // $url = "http://127.0.0.1:8000/api/genererFactureParNombreEmploye";
-        // try {
-        //     $response = Http::get($url);
-        // } catch (\Exception $e) {
-        //     dd($e->getMessage());
-        //     abort(503);
-        // }
-
-        // if ( $response->status() == 401) {
-        //     throw new AuthenticationException();
-        // } else if (! $response->successful()) {
-        //    abort(503);
-        // }
-
-        // return $response->body();
-        // // $entreprise_id = $this->fonct->findWhereMultiOne("employers",["user_id"],[Auth::user()->id])->entreprise_id;
-        // $entreprise_id = $this->employe->employe_info(Auth::user()->id)->entreprise_id;
-
-        // $type_etp = $this->employe->entreprise_info($entreprise_id)->type_entreprise_id;
+        $type_etp = $this->employe->entreprise_info($entreprise_id)->type_entreprise_id;
 
 
-        // $type_service = $this->abonnement->liste_services_autres_types_abonnements();
-        // $limite_type = $this->abonnement->liste_limite_autres_abonnements();
-        // $abonnement_etp = $this->abonnement->liste_type_abonnements_etp();
-        // $abonnement_cfp = $this->abonnement->liste_type_abonnements_of();
+        $type_service = $this->abonnement->liste_services_autres_types_abonnements();
+        $limite_type = $this->abonnement->liste_limite_autres_abonnements();
+        $abonnement_etp = $this->abonnement->liste_type_abonnements_etp();
+        $abonnement_cfp = $this->abonnement->liste_type_abonnements_of();
 
-        //  /**on verifie le dernier abonnement de l'entreprise et of */
-        // $etp_last_ab = DB::select('select type_arret from v_abonnement_facture_entreprise where entreprise_id = ? order by facture_id desc limit 1', [$entreprise_id]);
-        // $cfp_last_ab = DB::select('select type_arret from v_abonnement_facture where cfp_id = ? order by facture_id desc limit 1', [$entreprise_id]);
+         /**on verifie le dernier abonnement de l'entreprise et of */
+        $etp_last_ab = DB::select('select type_arret from v_abonnement_facture_entreprise where entreprise_id = ? order by facture_id desc limit 1', [$entreprise_id]);
+        $cfp_last_ab = DB::select('select type_arret from v_abonnement_facture where cfp_id = ? order by facture_id desc limit 1', [$entreprise_id]);
 
-        // /**Recuperation de la liste des services achetés */
-        // $liste_service = $this->abonnement->liste_autres_abonnement_entreprises($entreprise_id);
-        // // $liste_service = DB::select('select *,sum(montant_facture) as total_facture from v_autres_abonnement_entreprises where entreprise_id = ?',[$entreprise_id]);
+        /**Recuperation de la liste des services achetés */
+        $liste_service = $this->abonnement->liste_autres_abonnement_entreprises($entreprise_id);
+        // $liste_service = DB::select('select *,sum(montant_facture) as total_facture from v_autres_abonnement_entreprises where entreprise_id = ?',[$entreprise_id]);
 
-        // $mois_suivant = [];
-        // $annee_suivant = [];
+        $mois_suivant = [];
+        $annee_suivant = [];
 
-        // for ($i=0; $i < count($liste_service); $i++) {
+        for ($i=0; $i < count($liste_service); $i++) {
 
-        //     if($liste_service[$i]->mois_actuel == 12){
-        //         array_push($mois_suivant,  01);
-        //         array_push($annee_suivant,  ($liste_service[$i]->annee_actuel) + 1);
-        //     }
-        //     else {
-        //         array_push($mois_suivant,  ($liste_service[$i]->mois_actuel) + 1);
-        //         array_push($annee_suivant,  $liste_service[$i]->annee_actuel);
-        //     }
-        // }
-        // /**Liste des factures */
-        // $facture = DB::select("select sum(montant_facture) as total_facture,num_facture,invoice_date,due_date,statut from v_autres_abonnement_entreprises where entreprise_id = ? group by entreprise_id,invoice_date,due_date",[$entreprise_id]);
+            if($liste_service[$i]->mois_actuel == 12){
+                array_push($mois_suivant,  01);
+                array_push($annee_suivant,  ($liste_service[$i]->annee_actuel) + 1);
+            }
+            else {
+                array_push($mois_suivant,  ($liste_service[$i]->mois_actuel) + 1);
+                array_push($annee_suivant,  $liste_service[$i]->annee_actuel);
+            }
+        }
+        /**Liste des factures */
+        $facture = DB::select("select sum(montant_facture) as total_facture,num_facture,invoice_date,due_date,statut from v_autres_abonnement_entreprises where entreprise_id = ? group by entreprise_id,invoice_date,due_date",[$entreprise_id]);
 
-        // return view('abonnement.liste',compact('type_service','limite_type','abonnement_etp','abonnement_cfp','type_etp','etp_last_ab','cfp_last_ab','liste_service','mois_suivant','annee_suivant','facture'));
+        return view('abonnement.liste',compact('type_service','limite_type','abonnement_etp','abonnement_cfp','type_etp','etp_last_ab','cfp_last_ab','liste_service','mois_suivant','annee_suivant','facture'));
 
     }
 
