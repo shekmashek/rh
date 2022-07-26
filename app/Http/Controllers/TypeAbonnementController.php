@@ -33,6 +33,7 @@ class TypeAbonnementController extends Controller
     public function index()
     {
         $entreprise_id = $this->fonct->findWhereMultiOne("employers",["user_id"],[Auth::user()->id])->entreprise_id;
+
       /**appel api generation de facture pour abonnement*/
         try {
             $response = Http::get('http://rh.mg/api/genererFactureParNombreEmploye/'.$entreprise_id);
