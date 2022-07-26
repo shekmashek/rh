@@ -21,17 +21,18 @@ class TypeAbonnementController extends Controller
      */
     public function __construct()
     {
-        // $this->middleware('auth');
-        // $this->middleware(function ($request, $next) {
-        //     if(Auth::user()->exists == false) return redirect()->route('sign-in');
-        //     return $next($request);
-        // });
+        $this->middleware('auth');
+        $this->middleware(function ($request, $next) {
+            if(Auth::user()->exists == false) return redirect()->route('sign-in');
+            return $next($request);
+        });
         $this->fonct  = new FonctionGenerique();
         $this->abonnement = new Abonnement();
         $this->employe = new Employe();
     }
     public function index()
     {
+
         $entreprise_id = $this->fonct->findWhereMultiOne("employers",["user_id"],[Auth::user()->id])->entreprise_id;
 
       /**appel api generation de facture pour abonnement*/
@@ -40,6 +41,7 @@ class TypeAbonnementController extends Controller
         } catch(\Illuminate\Http\Client\ConnectionException $e) {
             dd('erreur');
         }
+        DB::update('update users set votes = 100 where name = ?', ['John']);
 
         $type_etp = $this->employe->entreprise_info($entreprise_id)->type_entreprise_id;
 

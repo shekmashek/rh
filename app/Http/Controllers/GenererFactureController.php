@@ -56,11 +56,12 @@ class GenererFactureController extends Controller
                 if($dernier_abonnement[$i]->service_id == 4) array_push($new_prix_recrutement,$dernier_abonnement[$i]->prix_fixe + ($dernier_abonnement[$i]->prix_par_employe * $nb_employe[0]->nb_employe));
                 if($dernier_abonnement[$i]->service_id == 5) array_push($new_prix_temps,$dernier_abonnement[$i]->prix_fixe + ($dernier_abonnement[$i]->prix_par_employe * $nb_employe[0]->nb_employe));
             }
-                /**SOLOINA 01 ny 25 RERHEFA METY TSARA FA TEST FOTSINY TY */
+                /**SOLOINA 01 ny 26 RERHEFA METY TSARA FA TEST FOTSINY TY */
             if($today->day == 26){
+
                 /**On doit d'abord verifier qu'il n'y a pas encore de facture generer à la date d'aujourd'hui*/
-                $verification_facture = DB::select('select count(*) from factures_autres_abonnements where invoice_date = ?', [$today_date_string]);
-                if($verification_facture < 1) {
+                $verification_facture = DB::select('select count(*) as nb_facture from factures_autres_abonnements where invoice_date = ?', [$today_date_string]);
+                if($verification_facture[0]->nb_facture < 1) {
                     for ($i=0; $i < count($dernier_abonnement); $i++) {
                         DB::insert('insert into entreprise_autres_abonnements (entreprise_id,limite_autres_abonnements_id,activite) values (?,?,?)', [$entreprise_id,$dernier_abonnement[$i]->limite_autres_abonnements_id,0]);
                         $last_entreprise_autres_abonnements_id = DB::table('entreprise_autres_abonnements')->latest('id')->first();
