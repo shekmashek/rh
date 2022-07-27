@@ -68,8 +68,8 @@
                             <div class="col-12 d-flex justify-content-between" style="align-items: center">
                                 <div class="col" align="right">
                                     <a href="" class="m-0 ps-1 pe-1 pdf_download"><button class="btn"><i class="bx bxs-file-pdf"></i>PDF</button></a>
-                                    <a class="mb-2 new_list_nouvelle"   href="">
-                                        <span class="btn_pdf text-center px-4 py-1" type="button">Retour à la liste des factures</span>
+                                    <a class="mb-2 new_list_nouvelle"   href="{{route('home')}}">
+                                        <span class="btn_pdf text-center px-4 py-1" type="button"> Retour à la liste des factures </span>
                                     </a>
                                 </div>
                             </div>
@@ -133,11 +133,9 @@
                                 <div class="col-md-3"></div>
                                 <div class="col-md-5">
                                     <div align="right" class="me-1">
-                                        <h5>Facture N°:</h5>
-
-
-                                        <h6>Date de facturation: </h6>
-                                        <h6>Date d'échéance:   </h6>
+                                        <h5>Facture N°: {{$id}}</h5>
+                                        <h6>Date de facturation:  @php echo date("d-m-Y",strtotime($facture->invoice_date)) @endphp  </h6>
+                                        <h6>Date d'échéance: @php echo date("d-m-Y",strtotime($facture->due_date)) @endphp   </h6>
                                         {{-- @if ($facture[0]->nom_type != "Gratuit") --}}
                                             <h6>Mode de paiement:
                                                 <select class="form-select-lg mb-3" name="" id="paiement">

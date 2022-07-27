@@ -67,7 +67,7 @@
             <div class="tab-pane fade show" id="abonnement">
                 <form action="{{route('inscription_abonnement')}}" method="POST">
                     @csrf
-                    @if($etp_last_ab!=null ||  $cfp_last_ab!=null)
+                    {{-- @if($etp_last_ab!=null ||  $cfp_last_ab!=null)
                         <div class="col-md-9">
                             <h2>Formation.mg</h2>
                             <p class="w-75">Veillez selectionner les services que vous voulez acheter, en selectionnant l'option pour l'abonnement avec les prix et les avantages affichés ci-dessous.</p>
@@ -146,7 +146,7 @@
                                 @endif
                             </div>
                         </div>
-                    @endif
+                    @endif --}}
                     <br>
                     <div class="col-md-9">
                         <h2>Services RH</h2>
@@ -182,9 +182,16 @@
                                         </div>
                                         <div class="card-body">
                                             <p class="card-title">
-                                                Le tarif de base est de  {{number_format($serv->prix_fixe,0,',','.')}} ar pour tout abonnement et s'ajoute de suite en fonction du nombre d'employé ajouté :
+                                                Le tarif de base est de  {{number_format($serv->prix_fixe,0,',','.')}} ar + {{number_format($serv->prix_par_employe,0,',','.')}} ar/ nombre d'employé
                                             </p>
-                                            @foreach ($limite_type as $limite )
+
+                                            {{-- GERER CHOIX ABONNEMENT --}}
+
+                                            <div class="form-check mx-3 my-3">
+                                                <input type="hidden" name = "id_type[]">
+                                                <input class="form-check-input" type="checkbox"  name="services_{{$serv->service_id}}" value="{{$serv->service_id}}" id="flexRadioDefault44">
+                                            </div>
+                                            {{-- @foreach ($limite_type as $limite )
                                                 @if($limite->autres_types_abonnements_id == $serv->id)
                                                     <div class="form-check mx-3 my-3">
                                                         <input type="hidden" value={{$limite->id}} name = "id_type[]">
@@ -193,7 +200,7 @@
                                                             <b>{{number_format($limite->prix_par_employe,0,',','.')}} ar/employé : </b><span class="description">{{$limite->min_emp}} à {{$limite->max_emp}} employés</span></label>
                                                     </div>
                                                 @endif
-                                            @endforeach
+                                            @endforeach --}}
 
 
                                             {{-- <input type="checkbox" class="btn-check" id="personnel" name="personnel">
@@ -201,6 +208,7 @@
                                         </div>
                                     </div>
                                 </div>
+
                             @endforeach
                         </div><br>
                         <div class="justify-content-right">
@@ -226,7 +234,7 @@
                             @php $j = 1; @endphp
                             @foreach ($facture as $fact)
                                 <tr>
-                                    <td><a href="{{route('detail_facture',$fact->num_facture)}}">{{$j}}</a></td>
+                                    <td><a href="{{route('detail_facture',[$fact->num_facture,$j])}}">{{$j}}</a></td>
                                     <td> {{number_format($fact->total_facture,0,',','.')}} Ar</td>
                                     <td>@php echo date("d-m-Y",strtotime($fact->invoice_date)) @endphp</td>
                                     <td>  @php echo date("d-m-Y",strtotime($fact->due_date)) @endphp</td>

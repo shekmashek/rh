@@ -12,13 +12,10 @@ class Abonnement extends Model
 {
     /**select from v_type_services_autres_types_abonnements ,limite_autres_abonnements,type_abonnements_etp,type_abonnements_of */
     public function liste_services_autres_types_abonnements(){
-       $req = DB::select('select service_id,type_service,prix_fixe,id from v_type_services_autres_types_abonnements');
+       $req = DB::select('select service_id,type_service,prix_fixe,id,prix_par_employe from v_type_services_autres_types_abonnements');
        return $req;
     }
-    public function liste_limite_autres_abonnements(){
-        $req = DB::select('select autres_types_abonnements_id,id,prix_par_employe,min_emp,max_emp from limite_autres_abonnements');
-        return $req;
-    }
+
     public function liste_type_abonnements_etp(){
         $req = DB::select('select id,illimite,nom_type,tarif,nb_utilisateur,nb_formateur,min_emp,max_emp from type_abonnements_etp ');
         return $req;
@@ -29,7 +26,7 @@ class Abonnement extends Model
     }
       /**Recuperation de la liste des services achetés d'une entreprise spécifié*/
     public function liste_autres_abonnement_entreprises($entreprise_id){
-        $req = DB::select('select invoice_date,type_service,mois_actuel,annee_actuel,date_demande,montant_facture,activite from v_autres_abonnement_entreprises where entreprise_id = ?', [$entreprise_id]);
+        $req = DB::select('select invoice_date,mois_actuel,annee_actuel,date_demande,montant_facture,activite from v_autres_abonnement_entreprises where entreprise_id = ?', [$entreprise_id]);
         return $req;
     }
 
@@ -58,7 +55,7 @@ class Abonnement extends Model
     /**CRUD abonnement par entreprise */
     public function enregistrer_abonnement_entreprise($entreprise_id,$service){
         $today = Carbon::today()->toDateString();
-        DB::insert('insert into entreprise_autres_abonnements (entreprise_id,limite_autres_abonnements_id,date_demande) values (?,?,?)', [$entreprise_id,$service,$today]);
+        DB::insert('insert into entreprise_autres_abonnements (entreprise_id,autres_types_abonnements_id,date_demande) values (?,?,?)', [$entreprise_id,$service,$today]);
     }
 
     /**Enregistrer abonnement pour l'offre formation */

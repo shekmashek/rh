@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\FonctionGenerique;
 use App\Models\Abonnement;
 use App\Models\Employe;
+use Carbon\Carbon;
 use GuzzleHttp\Client;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Support\Facades\Auth;
@@ -35,19 +36,21 @@ class TypeAbonnementController extends Controller
 
         $entreprise_id = $this->fonct->findWhereMultiOne("employers",["user_id"],[Auth::user()->id])->entreprise_id;
 
-      /**appel api generation de facture pour abonnement*/
+      /**appel api generation de facture pour abonnement à décommenter*/
+
         try {
             $response = Http::get('http://rh.mg/api/genererFactureParNombreEmploye/'.$entreprise_id);
+
         } catch(\Illuminate\Http\Client\ConnectionException $e) {
             dd('erreur');
         }
-        DB::update('update users set votes = 100 where name = ?', ['John']);
+
 
         $type_etp = $this->employe->entreprise_info($entreprise_id)->type_entreprise_id;
 
 
         $type_service = $this->abonnement->liste_services_autres_types_abonnements();
-        $limite_type = $this->abonnement->liste_limite_autres_abonnements();
+        // $limite_type = $this->abonnement->liste_limite_autres_abonnements();
         $abonnement_etp = $this->abonnement->liste_type_abonnements_etp();
         $abonnement_cfp = $this->abonnement->liste_type_abonnements_of();
 
@@ -56,8 +59,8 @@ class TypeAbonnementController extends Controller
         $cfp_last_ab = DB::select('select type_arret from v_abonnement_facture where cfp_id = ? order by facture_id desc limit 1', [$entreprise_id]);
 
         /**Recuperation de la liste des services achetés */
-        $liste_service = $this->abonnement->liste_autres_abonnement_entreprises($entreprise_id);
-        // $liste_service = DB::select('select *,sum(montant_facture) as total_facture from v_autres_abonnement_entreprises where entreprise_id = ?',[$entreprise_id]);
+        $liste_service = $this->fonct->findWhere("v_autres_abonnement_entreprises",["entreprise_id"],[$entreprise_id]);
+
 
         $mois_suivant = [];
         $annee_suivant = [];
@@ -76,7 +79,7 @@ class TypeAbonnementController extends Controller
         /**Liste des factures */
         $facture = DB::select("select sum(montant_facture) as total_facture,num_facture,invoice_date,due_date,statut from v_autres_abonnement_entreprises where entreprise_id = ? group by entreprise_id,invoice_date,due_date",[$entreprise_id]);
 
-        return view('abonnement.liste',compact('type_service','limite_type','abonnement_etp','abonnement_cfp','type_etp','etp_last_ab','cfp_last_ab','liste_service','mois_suivant','annee_suivant','facture'));
+        return view('abonnement.liste',compact('type_service','abonnement_etp','abonnement_cfp','type_etp','etp_last_ab','cfp_last_ab','liste_service','mois_suivant','annee_suivant','facture'));
 
     }
 

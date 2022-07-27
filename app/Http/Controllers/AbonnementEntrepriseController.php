@@ -50,16 +50,17 @@ class AbonnementEntrepriseController extends Controller
      */
     public function store(Request $request)
     {
+
         $entreprise_id = $this->fonct->findWhereMultiOne("employers",["user_id"],[Auth::user()->id])->entreprise_id;
 
         $nb_emp = count($this->fonct->findWhere("employers",["entreprise_id"],[$entreprise_id]));
         $donnees = $request->all();
 
         for ($i=1; $i <= count($donnees["id_type"]); $i++) {
-            if(isset($donnees["autres_".$i]) ) {
-                $this->abonnement->enregistrer_abonnement_entreprise($entreprise_id,$donnees["autres_".$i]);
+            if(isset($donnees["services_".$i]) ) {
+                $this->abonnement->enregistrer_abonnement_entreprise($entreprise_id,$donnees["services_".$i]);
                 $last_entreprise_autres_abonnements_id = DB::table('entreprise_autres_abonnements')->latest('id')->first();
-                $detail_abonnement = $this->fonct->findWhereMultiOne("v_autres_abonnement_limite",["id"],[$donnees["autres_".$i]]);
+                $detail_abonnement = $this->fonct->findWhereMultiOne("v_type_services_autres_types_abonnements",["id"],[$donnees["services_".$i]]);
                 /**calcul facture en fonction du nombre d'employé */
                 $prix_en_fonction_employe = $detail_abonnement->prix_par_employe * $nb_emp;
                 $montant_total = $prix_en_fonction_employe + $detail_abonnement->prix_fixe;
@@ -119,11 +120,10 @@ class AbonnementEntrepriseController extends Controller
         //
     }
     /**detail de la facture */
-    public function detail_facture($id){
-        $facture = $this->fonct->findWhereMultiOne("factures_autres_abonnements",["num_facture"],[$id]);
-        /**MBOLA MILA AMBOARINA LE FIRECUPERER NA LISTE SERVICE AMLE FACTURE ATAMBATRA HO IRAY */
+    public function detail_facture($num_fact,$id){
+        $facture = $this->fonct->findWhereMultiOne("factures_autres_abonnements",["num_facture"],[$num_fact]);
         $liste_service = $this->fonct->findWhere("v_autres_abonnement_entreprises",["invoice_date","entreprise_id"],[$facture->invoice_date,$facture->entreprise_id]);
         $nb_employe = count($this->fonct->findWhere("employers",["entreprise_id"],[$facture->entreprise_id]));
-        return view('abonnement.detail_facture',compact('facture','liste_service','nb_employe'));
+        return view('abonnement.detail_facture',compact('facture','liste_service','nb_employe','id'));
     }
 }
