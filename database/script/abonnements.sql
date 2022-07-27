@@ -16,6 +16,11 @@ CREATE TABLE `autres_types_abonnements` (
   `prix_par_employe`  decimal(15,2)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+INSERT INTO autres_types_abonnements(`type_service_id`,`prix_fixe`,`prix_par_employe`) VALUES (1,100000,1000);
+INSERT INTO autres_types_abonnements(`type_service_id`,`prix_fixe`,`prix_par_employe`) VALUES (2,200000,2000);
+INSERT INTO autres_types_abonnements(`type_service_id`,`prix_fixe`,`prix_par_employe`) VALUES (3,300000,3000);
+INSERT INTO autres_types_abonnements(`type_service_id`,`prix_fixe`,`prix_par_employe`) VALUES (4,400000,4000);
+INSERT INTO autres_types_abonnements(`type_service_id`,`prix_fixe`,`prix_par_employe`) VALUES (5,500000,5000);
 
 drop table if exists limite_autres_abonnements;
 

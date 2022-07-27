@@ -61,19 +61,47 @@
                             </tr>
                             @php $i+=1; @endphp
                         @endforeach
+                        @php $j = 0; @endphp
+                        @foreach ($abonnement_formation as $ab)
+                            <tr>
+                                <td> @php echo date("d-m-Y",strtotime($ab->date_demande)) @endphp</td>
+                                <td>{{$ab->nom_type}}, {{number_format($ab->tarif,0,',','.')}}ar </td>
+                                @if($mois_suivant_formation[$j] < 10)
+                                        <td> 01-0{{$mois_suivant_formation[$j]}}-{{$annee_suivant_formation[$j]}}</td>
+                                    @else
+                                        <td> 01-{{$mois_suivant_formation[$j]}}-{{$annee_suivant_formation[$j]}}</td>
+                                    @endif
+                                @if($ab->activite == 0)
+                                    <td><span style="background-color: orangered;padding:5px;color:white;border-radius:10px">Désactivé</span></td>
+                                @else <td><span style="background-color: green;padding:5px;color:white;border-radius:10px">Activé</span></td>
+                                @endif
+                                <td>
+                                    @if($ab->activite == 1)
+                                    <button class="btn btn-secondary" id="dropdownMenuButton1">
+                                        Arrêter le service
+                                    </button>
+                                    @else
+                                    <button class="btn btn-secondary" id="dropdownMenuButton1">
+                                        Arrêter le service
+                                </button>
+                                    @endif
+                                </td>
+                            </tr>
+                            @php $j+=1; @endphp
+                        @endforeach
                     </tbody>
                 </table>
             </div>
             <div class="tab-pane fade show" id="abonnement">
                 <form action="{{route('inscription_abonnement')}}" method="POST">
                     @csrf
-                    {{-- @if($etp_last_ab!=null ||  $cfp_last_ab!=null)
+                    @if($etp_last_ab == null )
                         <div class="col-md-9">
                             <h2>Formation.mg</h2>
                             <p class="w-75">Veillez selectionner les services que vous voulez acheter, en selectionnant l'option pour l'abonnement avec les prix et les avantages affichés ci-dessous.</p>
                             <div class="row row-cols-1 row-cols-md-2 g-5">
-                                @if($cfp_last_ab!=null)
-                                    @if($cfp_last_ab[0]->type_arret != null)
+                                @if($type_etp == 2)
+                                    @if($etp_last_ab[0]->type_arret != null)
                                         @if($type_etp == 2)
                                             <div class="col">
                                                 <div class="card shadow my-5">
@@ -108,8 +136,7 @@
                                         @endif
                                     @endif
                                 @endif
-                                @if($etp_last_ab!=null)
-                                    @if($etp_last_ab[0]->type_arret != null)
+                                @if($type_etp==1)
                                         @if($type_etp == 1)
                                             <div class="col">
                                                 <div class="card shadow my-5">
@@ -142,11 +169,10 @@
                                                 </div>
                                             </div>
                                         @endif
-                                    @endif
                                 @endif
                             </div>
                         </div>
-                    @endif --}}
+                    @endif
                     <br>
                     <div class="col-md-9">
                         <h2>Services RH</h2>
@@ -253,6 +279,7 @@
                                     @php $j+=1; @endphp
                                 </tr>
                             @endforeach
+
 
                     </tbody>
                 </table>

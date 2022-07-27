@@ -60,10 +60,12 @@ class Abonnement extends Model
 
     /**Enregistrer abonnement pour l'offre formation */
     public function enregistrer_abonnement_formation_etp($type_abonnement_id,$entreprise_id){
-        DB::insert('insert into abonnements (date_demande,type_abonnement_id,entreprise_id) values (?,?,?) ',[$this->today,$type_abonnement_id,$entreprise_id]);
+        $today = Carbon::today()->toDateString();
+        DB::insert('insert into abonnements (date_demande,status,type_abonnement_id,entreprise_id) values (?,?,?,?) ',[$today,"Désactivé",$type_abonnement_id,$entreprise_id]);
     }
     public function enregistrer_abonnement_formation_of($type_abonnement_id,$cfp_id){
-        DB::insert('insert into abonnements_cfp (date_demande,type_abonnement_id,cfp_id) values (?,?,?) ',[$this->today,$type_abonnement_id,$cfp_id]);
+        $today = Carbon::today()->toDateString();
+        DB::insert('insert into abonnements_cfp (date_demande,type_abonnement_id,cfp_id) values (?,?,?) ',[$today,"Désactivé",$type_abonnement_id,$cfp_id]);
     }
     /**Trouver le dernier num facture */
     public function findMax($nomTab, $nomCol)
@@ -81,6 +83,18 @@ class Abonnement extends Model
         $due_date = Carbon::today()->addDays(15)->toDateString();
         $statut = "non payé";
         DB::insert('insert into factures_autres_abonnements (entreprise_autres_abonnements_id,entreprise_id,invoice_date,due_date,num_facture,statut,montant_facture) values (?,?,?,?,?,?,?)', [$id,$entreprise_id,$today,$due_date,$num_facture,$statut,$montant_facture]);
+    }
+
+    /** insertion de données dans factures_abonnements */
+    public function insert_factures_abonnements_formation($id,$montant_facture){
+        //generation du numero de facture, on verifie le dernier numero de facture
+          $max_id = $this->findMax('factures_abonnements','num_facture')[0]->id_max;
+          if($max_id == null) $num_facture = 1;
+          else $num_facture = $max_id +=  1;
+          $today = Carbon::today()->toDateString();
+          $due_date = Carbon::today()->addDays(15)->toDateString();
+          $statut = "non payé";
+          DB::insert('insert into factures_abonnements (abonnement_id,invoice_date,due_date,num_facture,statut,montant_facture) values (?,?,?,?,?,?)', [$id,$today,$due_date,$num_facture,$statut,$montant_facture]);
     }
 
 }

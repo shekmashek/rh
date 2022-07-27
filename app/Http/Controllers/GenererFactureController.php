@@ -44,31 +44,13 @@ class GenererFactureController extends Controller
 
             /**Recuperer nombre employé ajouter après le dernier abonnement jusqu'à maintenant */
             $nb_employe = DB::select('select count(*) as nb_employe from employers where entreprise_id = ? and date(created_at) between ? and ? ',[$entreprise_id,$dernier_abonnement[0]->date_debut, $today_date_string]);
-
-            $new_prix_personnel = [];
-            $new_prix_paie= [];
-            $new_prix_conge = [];
-            $new_prix_recrutement = [];
-            $new_prix_temps = [];
-
-            for ($i=0; $i < count($dernier_abonnement); $i++) {
-                if($dernier_abonnement[$i]->service_id == 1) array_push($new_prix_personnel,$dernier_abonnement[$i]->prix_fixe + ($dernier_abonnement[$i]->prix_par_employe * $nb_employe[0]->nb_employe));
-                if($dernier_abonnement[$i]->service_id == 2) array_push($new_prix_paie,$dernier_abonnement[$i]->prix_fixe + ($dernier_abonnement[$i]->prix_par_employe * $nb_employe[0]->nb_employe));
-                if($dernier_abonnement[$i]->service_id == 3) array_push($new_prix_conge,$dernier_abonnement[$i]->prix_fixe + ($dernier_abonnement[$i]->prix_par_employe * $nb_employe[0]->nb_employe));
-                if($dernier_abonnement[$i]->service_id == 4) array_push($new_prix_recrutement,$dernier_abonnement[$i]->prix_fixe + ($dernier_abonnement[$i]->prix_par_employe * $nb_employe[0]->nb_employe));
-                if($dernier_abonnement[$i]->service_id == 5) array_push($new_prix_temps,$dernier_abonnement[$i]->prix_fixe + ($dernier_abonnement[$i]->prix_par_employe * $nb_employe[0]->nb_employe));
-            }
                 /**SOLOINA 01 ny 27 RERHEFA METY TSARA FA TEST FOTSINY TY */
             if($today->day == 27){
-                $today = Carbon::now();
-                $hier = $today->subDays(1);
-                $hier_date_string = $hier->toDateString();
-
 
                 /**On doit d'abord verifier qu'il n'y a pas encore de facture generer à la date d'aujourd'hui*/
-            /*    $verification_facture = DB::select('select count(*) as nb_facture from factures_autres_abonnements where invoice_date = ?', [$today_date_string]);*/
-                $verification_facture = DB::select('select count(*) as nb_facture from factures_autres_abonnements where invoice_date != ?', [$hier_date_string]);
-                if($verification_facture[0]->nb_facture < 1) {
+                $verification_facture = DB::select('select count(*) as nb_facture from factures_autres_abonnements where invoice_date = ?', [$today_date_string]);
+              /*  $verification_facture = DB::select('select count(*) as nb_facture from factures_autres_abonnements where invoice_date != ?', [$hier_date_string]);*/
+                if($verification_facture[0]->nb_facture == null) {
                     for ($i=0; $i < count($dernier_abonnement); $i++) {
                         DB::insert('insert into entreprise_autres_abonnements (entreprise_id,autres_types_abonnements_id,activite) values (?,?,?)', [$entreprise_id,$dernier_abonnement[$i]->autres_types_abonnements_id,0]);
                         $last_entreprise_autres_abonnements_id = DB::table('entreprise_autres_abonnements')->latest('id')->first();

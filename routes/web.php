@@ -44,7 +44,8 @@ Auth::routes();
 
 
 
-Route::get('/home', 'HomeController@index')->name('home');
+// Route::get('/home', 'HomeController@index')->name('home');
+
 /**Creer nouveau type */
 Route::get('/nouveau', function () {
     return view('superadmin.type');

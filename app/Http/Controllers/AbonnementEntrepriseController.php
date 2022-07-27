@@ -56,6 +56,8 @@ class AbonnementEntrepriseController extends Controller
         $nb_emp = count($this->fonct->findWhere("employers",["entreprise_id"],[$entreprise_id]));
         $donnees = $request->all();
 
+        /**COMMENTENA FOTSINNY TY MBA ANAOVANA TEST NY ABONNEMENT FORMATION */
+
         for ($i=1; $i <= count($donnees["id_type"]); $i++) {
             if(isset($donnees["services_".$i]) ) {
                 $this->abonnement->enregistrer_abonnement_entreprise($entreprise_id,$donnees["services_".$i]);
@@ -68,8 +70,14 @@ class AbonnementEntrepriseController extends Controller
             }
         }
 
-        if(isset($donnees["entreprise"])) $this->fonct->enregistrer_abonnement_formation_etp($donnees["entreprise"],$entreprise_id);
-        if(isset($donnees["of"])) $this->fonct->enregistrer_abonnement_formation_etp($donnees["of"],$entreprise_id);
+        if(isset($donnees["entreprise"])){
+            $this->abonnement->enregistrer_abonnement_formation_etp($donnees["entreprise"],$entreprise_id);
+            $ab_id= DB::table('abonnements')->latest('id')->first();
+            $abonnement_id = $this->fonct->findWhereMultiOne("v_type_abonnement_etp",["abonnement_id"],[$ab_id->id]);
+
+            $this->abonnement->insert_factures_abonnements_formation($abonnement_id->abonnement_id,$abonnement_id->tarif);
+        }
+        if(isset($donnees["of"])) $this->abonnement->enregistrer_abonnement_formation_etp($donnees["of"],$entreprise_id);
         return back();
         // if($request->entreprise != null)  $this->abonnement->enregistrer_abonnement_formation_etp($entreprise_id,$request->entreprise);
         // if($request->of != null)  $this->abonnement->enregistrer_abonnement_formation_of($entreprise_id,$request->entreprise);

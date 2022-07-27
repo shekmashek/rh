@@ -55,8 +55,8 @@ class TypeAbonnementController extends Controller
         $abonnement_cfp = $this->abonnement->liste_type_abonnements_of();
 
          /**on verifie le dernier abonnement de l'entreprise et of */
-        $etp_last_ab = DB::select('select type_arret from v_abonnement_facture_entreprise where entreprise_id = ? order by facture_id desc limit 1', [$entreprise_id]);
-        $cfp_last_ab = DB::select('select type_arret from v_abonnement_facture where cfp_id = ? order by facture_id desc limit 1', [$entreprise_id]);
+        if($type_etp == 1)  $etp_last_ab = DB::select('select type_arret from v_abonnement_facture_entreprise where entreprise_id = ? order by facture_id desc limit 1', [$entreprise_id]);
+        if($type_etp == 2)  $etp_last_ab = DB::select('select type_arret from v_abonnement_facture where cfp_id = ? order by facture_id desc limit 1', [$entreprise_id]);
 
         /**Recuperation de la liste des services achetés */
         $liste_service = $this->fonct->findWhere("v_autres_abonnement_entreprises",["entreprise_id"],[$entreprise_id]);
@@ -64,6 +64,7 @@ class TypeAbonnementController extends Controller
 
         $mois_suivant = [];
         $annee_suivant = [];
+
 
         for ($i=0; $i < count($liste_service); $i++) {
 
@@ -74,12 +75,30 @@ class TypeAbonnementController extends Controller
             else {
                 array_push($mois_suivant,  ($liste_service[$i]->mois_actuel) + 1);
                 array_push($annee_suivant,  $liste_service[$i]->annee_actuel);
+
             }
         }
         /**Liste des factures */
         $facture = DB::select("select sum(montant_facture) as total_facture,num_facture,invoice_date,due_date,statut from v_autres_abonnement_entreprises where entreprise_id = ? group by entreprise_id,invoice_date,due_date",[$entreprise_id]);
 
-        return view('abonnement.liste',compact('type_service','abonnement_etp','abonnement_cfp','type_etp','etp_last_ab','cfp_last_ab','liste_service','mois_suivant','annee_suivant','facture'));
+        /**Liste abonnement pour formation */
+        $abonnement_formation = $this->fonct->findWhere("v_type_abonnement_etp",["entreprise_id"],[$entreprise_id]);
+
+        /**afficher la date de la prochaine facture */
+        $mois_suivant_formation = [];
+        $annee_suivant_formation = [];
+        for ($i=0; $i < count($abonnement_formation); $i++) {
+
+            if($abonnement_formation[$i]->mois_actuel == 12){
+                array_push($mois_suivant_formation,  01);
+                array_push($annee_suivant_formation,  ($abonnement_formation[$i]->annee_actuel) + 1);
+            }
+            else {
+                array_push($mois_suivant_formation,  ($abonnement_formation[$i]->mois_actuel) + 1);
+                array_push($annee_suivant_formation,  $abonnement_formation[$i]->annee_actuel);
+            }
+        }
+        return view('abonnement.liste',compact('mois_suivant_formation','annee_suivant_formation','abonnement_formation','type_service','abonnement_etp','abonnement_cfp','type_etp','etp_last_ab','liste_service','mois_suivant','annee_suivant','facture'));
 
     }
 
