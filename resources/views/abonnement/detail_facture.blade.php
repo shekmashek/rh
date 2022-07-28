@@ -253,23 +253,29 @@
                                                 <td>{{number_format($service->montant_facture, 0, ',', '.')}} Ar </td>
                                             </tr>
                                             @endforeach
-
-                                            {{-- @if($dates_abonnement[0]->date_debut == null)
-                                                <td>Abonnement {{$facture[0]->nom_type}} - Mensuel <br> Debut : <span style="color: red" > En attente d'activation </span> <br> Fin: <span style="color: red">En attente d'activation</span>  </td>
-                                            @else
-
-                                                <td>Abonnement {{$facture[0]->nom_type}} - Mensuel <br> Debut : @php echo date("d-m-Y",strtotime($dates_abonnement[0]->date_debut)) @endphp <br> Fin: @php echo date("d-m-Y",strtotime($dates_abonnement[0]->date_fin)) @endphp</td>
-                                            @endif --}}
-
-
+                                            @for ($i = 0;$i < count($descri); $i++)
+                                                <tr>
+                                                    <td> {{$descri[$i]}} (formation.mg)</td>
+                                                    <td> {{number_format($prix[$i], 0, ',', '.')}} Ar </td>
+                                                    <td> - </td>
+                                                    <td>{{number_format($prix[$i], 0, ',', '.')}} Ar</td>
+                                                </tr>
+                                            @endfor
                                     </tbody>
                                 </table>
 
                             </div>
                         </div>
                     </div>
-
-                    {{-- <p>Arretée la présente facture à la somme de:<strong> {{$lettre_montant}} Ariary</strong></p> --}}
+                    <div class="row">
+                        <div class="col-3"></div>
+                        <div class="col-3"></div>
+                        <div class="col-2"></div>
+                        <div class="col-4 ps-5">
+                            <p class="ps-5 ms-5">Net à payer : {{number_format($montant_total, 0, ',', '.')}} Ar</p>
+                        </div>
+                    </div>
+                    <p>Arretée la présente facture à la somme de:<strong> {{$lettre_montant}} Ariary</strong></p>
                 </div>
             </div>
         </div>

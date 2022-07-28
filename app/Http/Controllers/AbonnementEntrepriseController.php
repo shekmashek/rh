@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Abonnement;
 use App\Models\FonctionGenerique;
+use App\Models\Facture;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -26,6 +27,7 @@ class AbonnementEntrepriseController extends Controller
         // });
         $this->fonct  = new FonctionGenerique();
         $this->abonnement = new Abonnement();
+        $this->fact = new Facture();
     }
     public function index()
     {
@@ -128,10 +130,17 @@ class AbonnementEntrepriseController extends Controller
         //
     }
     /**detail de la facture */
-    public function detail_facture($num_fact,$id){
+    public function detail_facture(Request $request){
+        $data = $request->all();
+        $num_fact = $data['num_fact'];
+        $id =  $data['id_fact'];
+        $descri = $data['descri'];
+        $prix = $data['prix'];
+        $montant_total = $data['montant_facture'];
         $facture = $this->fonct->findWhereMultiOne("factures_autres_abonnements",["num_facture"],[$num_fact]);
         $liste_service = $this->fonct->findWhere("v_autres_abonnement_entreprises",["invoice_date","entreprise_id"],[$facture->invoice_date,$facture->entreprise_id]);
         $nb_employe = count($this->fonct->findWhere("employers",["entreprise_id"],[$facture->entreprise_id]));
-        return view('abonnement.detail_facture',compact('facture','liste_service','nb_employe','id'));
+        $lettre_montant = $this->fact->int2str($montant_total);
+        return view('abonnement.detail_facture',compact('montant_total','lettre_montant','facture','liste_service','nb_employe','id','descri','prix'));
     }
 }

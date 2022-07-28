@@ -62,7 +62,7 @@ Route::post('inscription_abonnement','AbonnementEntrepriseController@store')->na
 
 Route::get('listeAbonne','AbonnementController@listeAbonne')->name('listeAbonne');
 Route::get('verification','TypeAbonnementController@verification')->name('verification');
-Route::get('/detail_facture/{num_fact}/{id}','AbonnementEntrepriseController@detail_facture')->name('detail_facture');
+Route::post('/detail_facture','AbonnementEntrepriseController@detail_facture')->name('detail_facture');
 
 /**ESORINA TY REHEFA VITA NY TEST */
 Route::get('genererFactureParNombreEmploye/{id}','GenererFactureController@genererFactureParNombreEmploye')->name('genererFactureParNombreEmploye');

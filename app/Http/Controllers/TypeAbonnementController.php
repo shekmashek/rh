@@ -78,8 +78,27 @@ class TypeAbonnementController extends Controller
 
             }
         }
-        /**Liste des factures */
+        /**Liste des factures : facture services RH*/
+        $montant_total = 0;
         $facture = DB::select("select sum(montant_facture) as total_facture,num_facture,invoice_date,due_date,statut from v_autres_abonnement_entreprises where entreprise_id = ? group by entreprise_id,invoice_date,due_date",[$entreprise_id]);
+        /**facture formation.mg */
+        $montant_facture_total = [];
+        $facture_formation = [];
+        for ($i=0; $i < count($facture); $i++) {
+            $req = DB::select("select sum(montant_facture) as total_facture,num_facture,invoice_date,due_date,nom_type,montant_facture from v_abonnement_facture_entreprise where entreprise_id = ? and invoice_date = ? ",[$entreprise_id,$facture[$i]->invoice_date]);
+            if(count($req )< 1) array_push($montant_facture_total ,$montant_facture_total += $facture[$i]->total_facture);
+
+            else{
+                $montant_total = 0;
+                for ($j=0; $j < count($req); $j++) {
+                    array_push($montant_facture_total,$montant_total += $facture[$i]->total_facture + $req[$j]->total_facture);
+                    if($req[$j]->nom_type != null)  array_push($facture_formation,$req[$j]);
+                }
+            }
+
+        }
+
+        $nb_montant_different = count($montant_facture_total);
 
         /**Liste abonnement pour formation */
         $abonnement_formation = $this->fonct->findWhere("v_type_abonnement_etp",["entreprise_id"],[$entreprise_id]);
@@ -98,7 +117,7 @@ class TypeAbonnementController extends Controller
                 array_push($annee_suivant_formation,  $abonnement_formation[$i]->annee_actuel);
             }
         }
-        return view('abonnement.liste',compact('mois_suivant_formation','annee_suivant_formation','abonnement_formation','type_service','abonnement_etp','abonnement_cfp','type_etp','etp_last_ab','liste_service','mois_suivant','annee_suivant','facture'));
+        return view('abonnement.liste',compact('montant_facture_total','facture_formation','mois_suivant_formation','annee_suivant_formation','abonnement_formation','type_service','abonnement_etp','abonnement_cfp','type_etp','etp_last_ab','liste_service','mois_suivant','annee_suivant','facture'));
 
     }
 

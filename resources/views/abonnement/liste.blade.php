@@ -3,6 +3,13 @@
 @section('title')
     <p class="text_header m-0 mt-1">Service et abonnement</p>
 @endsection
+<style>
+    .buttonn_neuttre{
+        border: none;
+        background: transparent;
+        color: #7635dc;
+    }
+</style>
 @section('content')
 
 <div class="container-fluid">
@@ -257,11 +264,21 @@
                     </tr>
                     </thead>
                     <tbody>
-                            @php $j = 1; @endphp
+                            @php $j = 1;$l = 0 @endphp
                             @foreach ($facture as $fact)
                                 <tr>
-                                    <td><a href="{{route('detail_facture',[$fact->num_facture,$j])}}">{{$j}}</a></td>
-                                    <td> {{number_format($fact->total_facture,0,',','.')}} Ar</td>
+                                    <form action="{{route('detail_facture')}}" method="POST">
+                                        @csrf
+                                        @foreach ($facture_formation as $factures)
+                                            <input type="text" name = "descri[]" value = {{$factures->nom_type}} hidden>
+                                            <input type="text" name = "prix[]" value = {{$factures->montant_facture}} hidden>
+                                        @endforeach
+                                        <input type="text" name = "num_fact" value = {{$fact->num_facture}} hidden>
+                                        <input type="text" name = "id_fact" value = {{$j}} hidden>
+                                        <input type="text" name="montant_facture" value="{{$montant_facture_total[$l]}}" hidden>
+                                        <td> <button type="submit" class="buttonn_neuttre">{{$j}}</button></td>
+                                    </form>
+                                    <td> {{number_format($montant_facture_total[$l],0,',','.')}} Ar</td>
                                     <td>@php echo date("d-m-Y",strtotime($fact->invoice_date)) @endphp</td>
                                     <td>  @php echo date("d-m-Y",strtotime($fact->due_date)) @endphp</td>
                                     <td>@for ($i = 0;$i<count($liste_service);$i++)
@@ -272,14 +289,15 @@
                                                 {{$liste_service[$i]->type_service}}
                                                 @endif
                                             @endif
-
                                         @endfor
+                                        @foreach ($facture_formation as $form )
+                                            {{$form->nom_type}}
+                                        @endforeach
                                     </td>
                                     <td>{{$fact->statut}}</td>
-                                    @php $j+=1; @endphp
+                                    @php $j+=1;$l+=1; @endphp
                                 </tr>
                             @endforeach
-
 
                     </tbody>
                 </table>
