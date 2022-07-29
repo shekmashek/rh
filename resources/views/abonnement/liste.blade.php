@@ -269,10 +269,7 @@
                                 <tr>
                                     <form action="{{route('detail_facture')}}" method="POST">
                                         @csrf
-                                        @foreach ($facture_formation as $factures)
-                                            <input type="text" name = "descri[]" value = {{$factures->nom_type}} hidden>
-                                            <input type="text" name = "prix[]" value = {{$factures->montant_facture}} hidden>
-                                        @endforeach
+
                                         <input type="text" name = "num_fact" value = {{$fact->num_facture}} hidden>
                                         <input type="text" name = "id_fact" value = {{$j}} hidden>
                                         <input type="text" name="montant_facture" value="{{$montant_facture_total[$l]}}" hidden>
@@ -283,16 +280,19 @@
                                     <td>  @php echo date("d-m-Y",strtotime($fact->due_date)) @endphp</td>
                                     <td>@for ($i = 0;$i<count($liste_service);$i++)
                                             @if ($fact->invoice_date == $liste_service[$i]->invoice_date)
-                                                @if($i < count($liste_service)-1)
-                                                {{$liste_service[$i]->type_service}} ,
-                                                @else
-                                                {{$liste_service[$i]->type_service}}
-                                                @endif
+
+                                                {{$liste_service[$i]->type_service}} <br>
+
+
                                             @endif
                                         @endfor
+
                                         @foreach ($facture_formation as $form )
-                                            {{$form->nom_type}}
+                                            @if($fact->invoice_date == $form->invoice_date)
+                                                {{$form->nom_type}}
+                                            @endif
                                         @endforeach
+
                                     </td>
                                     <td>{{$fact->statut}}</td>
                                     @php $j+=1;$l+=1; @endphp

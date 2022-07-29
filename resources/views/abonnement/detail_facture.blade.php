@@ -253,12 +253,12 @@
                                                 <td>{{number_format($service->montant_facture, 0, ',', '.')}} Ar </td>
                                             </tr>
                                             @endforeach
-                                            @for ($i = 0;$i < count($descri); $i++)
+                                            @for ($i = 0;$i < count($abonnement_formation); $i++)
                                                 <tr>
-                                                    <td> {{$descri[$i]}} (formation.mg)</td>
-                                                    <td> {{number_format($prix[$i], 0, ',', '.')}} Ar </td>
+                                                    <td> {{$abonnement_formation[$i]->nom_type}} (formation.mg)</td>
+                                                    <td> {{number_format($abonnement_formation[$i]->tarif, 0, ',', '.')}} Ar </td>
                                                     <td> - </td>
-                                                    <td>{{number_format($prix[$i], 0, ',', '.')}} Ar</td>
+                                                    <td>{{number_format($abonnement_formation[$i]->tarif, 0, ',', '.')}} Ar</td>
                                                 </tr>
                                             @endfor
                                     </tbody>
