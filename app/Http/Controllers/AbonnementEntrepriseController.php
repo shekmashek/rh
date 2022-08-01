@@ -52,12 +52,11 @@ class AbonnementEntrepriseController extends Controller
      */
     public function store(Request $request)
     {
-
         $entreprise_id = $this->fonct->findWhereMultiOne("employers",["user_id"],[Auth::user()->id])->entreprise_id;
 
         $nb_emp = count($this->fonct->findWhere("employers",["entreprise_id"],[$entreprise_id]));
         $donnees = $request->all();
-
+        dd($donnees);
         /**COMMENTENA FOTSINNY TY MBA ANAOVANA TEST NY ABONNEMENT FORMATION */
 
         for ($i=1; $i <= count($donnees["id_type"]); $i++) {

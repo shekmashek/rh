@@ -108,40 +108,42 @@
                             <p class="w-75">Veillez selectionner les services que vous voulez acheter, en selectionnant l'option pour l'abonnement avec les prix et les avantages affichés ci-dessous.</p>
                             <div class="row row-cols-1 row-cols-md-2 g-5">
                                 @if($type_etp == 2)
-                                    @if($etp_last_ab[0]->type_arret != null)
-                                        @if($type_etp == 2)
-                                            <div class="col">
-                                                <div class="card shadow my-5">
-                                                    <div class="d-flex flex-row align-items-center">
-                                                        <div class="icon">
-                                                            <img class="card-img-top" src="{{ asset('img/logos_all/iconFormation.webp') }}" alt="Card image cap">
-                                                        </div>
-                                                        <div class="ms-2">
-                                                            <h6 class="mb-0">Organisme de Formation</h6>
-                                                        </div>
+                                    {{-- @if ($etp_last_ab != null) --}}
+                                        {{-- @if($etp_last_ab[0]->type_arret != null) --}}
+                                    @if($type_etp == 2)
+                                        <div class="col">
+                                            <div class="card shadow my-5">
+                                                <div class="d-flex flex-row align-items-center">
+                                                    <div class="icon">
+                                                        <img class="card-img-top" src="{{ asset('img/logos_all/iconFormation.webp') }}" alt="Card image cap">
                                                     </div>
-                                                    <div class="card-body">
-                                                        <p class="description_formation card-text"> Le prix de l'abonnement varie en fonction du nombre d'employé, d'utilisateur et de formateur.</p>
-                                                        <p>Choisissez votre abonnement:</p>
-                                                        @foreach ($abonnement_cfp as $ab_cfp)
-                                                            @if($ab_cfp->id != 1)
-                                                                <div class="form-check mx-2 my-2">
-                                                                    <input class="form-check-input" value = {{$ab_cfp->id}} type="radio" name="of" id="flexRadioDefault1">
-                                                                    <label class="form-check-label" for="flexRadioDefault1">
-                                                                        @if($ab_cfp->illimite == 0)
-                                                                            <b>{{$ab_cfp->nom_type}} -  {{number_format($ab_cfp->tarif,0,',','.')}} ar/mois :</b><span class="description"> {{$ab_cfp->nb_utilisateur}} utilisateurs - {{$ab_cfp->nb_formateur}} formateurs - {{$ab_cfp->nb_projet}} projets</span> </label>
-                                                                        @endif
-                                                                        @if($ab_cfp->illimite == 1)
-                                                                            <b>{{$ab_cfp->nom_type}} - {{number_format($ab_cfp->tarif,0,',','.')}}ar/mois : </b><span class="description"> utilisateurs illimités -  formateurs illimités -  projets illimités</span></label>
-                                                                        @endif
-                                                                </div>
-                                                            @endif
-                                                        @endforeach
+                                                    <div class="ms-2">
+                                                        <h6 class="mb-0">Organisme de Formation</h6>
                                                     </div>
                                                 </div>
+                                                <div class="card-body">
+                                                    <p class="description_formation card-text"> Le prix de l'abonnement varie en fonction du nombre d'employé, d'utilisateur et de formateur.</p>
+                                                    <p>Choisissez votre abonnement:</p>
+                                                    @foreach ($abonnement_cfp as $ab_cfp)
+                                                        @if($ab_cfp->id != 1)
+                                                            <div class="form-check mx-2 my-2">
+                                                                <input class="form-check-input" value = {{$ab_cfp->id}} type="radio" name="of" id="flexRadioDefault1">
+                                                                <label class="form-check-label" for="flexRadioDefault1">
+                                                                    @if($ab_cfp->illimite == 0)
+                                                                        <b>{{$ab_cfp->nom_type}} -  {{number_format($ab_cfp->tarif,0,',','.')}} ar/mois :</b><span class="description"> {{$ab_cfp->nb_utilisateur}} utilisateurs - {{$ab_cfp->nb_formateur}} formateurs - {{$ab_cfp->nb_projet}} projets</span> </label>
+                                                                    @endif
+                                                                    @if($ab_cfp->illimite == 1)
+                                                                        <b>{{$ab_cfp->nom_type}} - {{number_format($ab_cfp->tarif,0,',','.')}}ar/mois : </b><span class="description"> utilisateurs illimités -  formateurs illimités -  projets illimités</span></label>
+                                                                    @endif
+                                                            </div>
+                                                        @endif
+                                                    @endforeach
+                                                </div>
                                             </div>
-                                        @endif
+                                        </div>
                                     @endif
+                                        {{-- @endif --}}
+                                    {{-- @endif --}}
                                 @endif
                                 @if($type_etp==1)
                                         @if($type_etp == 1)

@@ -58,6 +58,7 @@ class TypeAbonnementController extends Controller
         if($type_etp == 1)  $etp_last_ab = DB::select('select type_arret from v_abonnement_facture_entreprise where entreprise_id = ? order by facture_id desc limit 1', [$entreprise_id]);
         if($type_etp == 2)  $etp_last_ab = DB::select('select type_arret from v_abonnement_facture where cfp_id = ? order by facture_id desc limit 1', [$entreprise_id]);
 
+
         /**Recuperation de la liste des services achetés */
         $liste_service = $this->fonct->findWhere("v_autres_abonnement_entreprises",["entreprise_id"],[$entreprise_id]);
 
